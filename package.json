@@ -1,0 +1,35 @@
+{
+  "name": "jilebi-website",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.101.1",
+    "date-fns": "^4.1.0",
+    "next": "14.2.35",
+    "next-intl": "^4.9.0",
+    "react": "^18",
+    "react-day-picker": "^9.14.0",
+    "react-dom": "^18",
+    "resend": "^6.10.0"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@types/jest": "^30.0.0",
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "jest": "^30.3.0",
+    "jest-environment-jsdom": "^30.3.0",
+    "postcss": "^8",
+    "tailwindcss": "^3.4.1",
+    "ts-jest": "^29.4.9",
+    "typescript": "^5"
+  }
+}
