@@ -1,0 +1,72 @@
+{
+  "nav": {
+    "about": "About",
+    "menu": "Menu",
+    "gallery": "Gallery",
+    "contact": "Contact",
+    "reserve": "Reserve a Table",
+    "lang": "DE"
+  },
+  "hero": {
+    "eyebrow": "Authentic Indian · Nürtingen",
+    "headline": "Welcome to",
+    "headline_accent": "Jilebi",
+    "tagline": "Experience the flavours of India — crafted with care, served with passion.",
+    "cta_menu": "View Menu",
+    "cta_reserve": "Book a Table"
+  },
+  "about": {
+    "label": "Our Story",
+    "title": "More Than a Restaurant",
+    "body": "Jilebi was born from a deep love for Indian cuisine. Each dish tells a story — of spice-scented markets, of family recipes passed down through generations, and of a desire to bring authentic Indian hospitality to Nürtingen. We use fresh, hand-picked ingredients and prepare everything daily from scratch."
+  },
+  "menu": {
+    "label": "Our Kitchen",
+    "title": "Menu",
+    "categories": {
+      "starters": "Starters",
+      "mains": "Mains",
+      "desserts": "Desserts",
+      "drinks": "Drinks"
+    },
+    "veg": "Vegetarian",
+    "spicy": "Spicy"
+  },
+  "reservation": {
+    "label": "Reserve a Table",
+    "title": "Book a Table",
+    "date_label": "Choose a date",
+    "slot_label": "Choose a time",
+    "no_slots": "No tables available on this day.",
+    "form": {
+      "name": "Your name",
+      "party_size": "Party size",
+      "email": "Email address",
+      "phone": "Phone number",
+      "notes": "Notes (optional)",
+      "submit": "Reserve Now"
+    },
+    "success_title": "Reservation received!",
+    "success_body": "We have received your request and will send you a confirmation by email.",
+    "error": "Something went wrong. Please try again."
+  },
+  "gallery": {
+    "label": "A Glimpse Inside",
+    "title": "Gallery"
+  },
+  "footer": {
+    "hours_title": "Opening Hours",
+    "address_title": "Address",
+    "follow": "Follow Us",
+    "impressum": "Legal Notice",
+    "datenschutz": "Privacy Policy",
+    "copyright": "© 2026 Jilebi. All rights reserved."
+  },
+  "email": {
+    "confirm_subject": "Your reservation at Jilebi — Confirmation",
+    "confirm_greeting": "Thank you for your reservation!",
+    "confirm_body": "We look forward to welcoming you. Here are your booking details:",
+    "cancel_subject": "Your reservation at Jilebi — Cancellation",
+    "cancel_body": "Unfortunately your reservation has been cancelled. Please contact us to make a new booking."
+  }
+}

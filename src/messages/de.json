@@ -1,0 +1,72 @@
+{
+  "nav": {
+    "about": "Über uns",
+    "menu": "Speisekarte",
+    "gallery": "Galerie",
+    "contact": "Kontakt",
+    "reserve": "Tisch reservieren",
+    "lang": "EN"
+  },
+  "hero": {
+    "eyebrow": "Authentisch Indisch · Nürtingen",
+    "headline": "Willkommen bei",
+    "headline_accent": "Jilebi",
+    "tagline": "Erleben Sie die Aromen Indiens — handwerklich zubereitet, mit Leidenschaft serviert.",
+    "cta_menu": "Speisekarte",
+    "cta_reserve": "Tisch buchen"
+  },
+  "about": {
+    "label": "Unsere Geschichte",
+    "title": "Mehr als ein Restaurant",
+    "body": "Jilebi wurde aus einer tiefen Leidenschaft für die Küche Indiens geboren. Jedes Gericht erzählt eine Geschichte — von gewürzduftenden Märkten, von Familienrezepten, die über Generationen weitergegeben wurden, und von dem Wunsch, echte indische Gastfreundschaft nach Nürtingen zu bringen. Wir verwenden frische, handverlesene Zutaten und bereiten alles täglich frisch zu."
+  },
+  "menu": {
+    "label": "Unsere Küche",
+    "title": "Speisekarte",
+    "categories": {
+      "starters": "Vorspeisen",
+      "mains": "Hauptgerichte",
+      "desserts": "Desserts",
+      "drinks": "Getränke"
+    },
+    "veg": "Vegetarisch",
+    "spicy": "Scharf"
+  },
+  "reservation": {
+    "label": "Tisch reservieren",
+    "title": "Einen Tisch buchen",
+    "date_label": "Datum wählen",
+    "slot_label": "Uhrzeit wählen",
+    "no_slots": "Keine freien Tische an diesem Tag.",
+    "form": {
+      "name": "Ihr Name",
+      "party_size": "Personenanzahl",
+      "email": "E-Mail-Adresse",
+      "phone": "Telefonnummer",
+      "notes": "Anmerkungen (optional)",
+      "submit": "Jetzt reservieren"
+    },
+    "success_title": "Reservierung erhalten!",
+    "success_body": "Wir haben Ihre Anfrage erhalten und werden Ihnen eine Bestätigung per E-Mail senden.",
+    "error": "Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut."
+  },
+  "gallery": {
+    "label": "Einblicke",
+    "title": "Galerie"
+  },
+  "footer": {
+    "hours_title": "Öffnungszeiten",
+    "address_title": "Adresse",
+    "follow": "Folgen Sie uns",
+    "impressum": "Impressum",
+    "datenschutz": "Datenschutz",
+    "copyright": "© 2026 Jilebi. Alle Rechte vorbehalten."
+  },
+  "email": {
+    "confirm_subject": "Ihre Reservierung bei Jilebi — Bestätigung",
+    "confirm_greeting": "Vielen Dank für Ihre Reservierung!",
+    "confirm_body": "Wir freuen uns auf Ihren Besuch. Hier sind Ihre Buchungsdetails:",
+    "cancel_subject": "Ihre Reservierung bei Jilebi — Stornierung",
+    "cancel_body": "Ihre Reservierung wurde leider storniert. Bitte kontaktieren Sie uns für eine neue Buchung."
+  }
+}
