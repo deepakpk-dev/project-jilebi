@@ -1,4 +1,4 @@
-type Status = 'pending' | 'confirmed' | 'cancelled'
+export type Status = 'pending' | 'confirmed' | 'cancelled'
 
 const styles: Record<Status, string> = {
   pending: 'bg-yellow-100 text-yellow-800',

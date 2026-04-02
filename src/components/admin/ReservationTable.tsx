@@ -1,7 +1,8 @@
 'use client'
 
 import { useState } from 'react'
-import StatusBadge from '@/components/ui/StatusBadge'
+import StatusBadge, { Status } from '@/components/ui/StatusBadge'
+import { updateReservationStatus } from '@/app/[locale]/admin/actions'
 
 type Reservation = {
   id: string
@@ -11,32 +12,30 @@ type Reservation = {
   party_size: number
   date: string
   notes: string | null
-  status: 'pending' | 'confirmed' | 'cancelled'
+  status: Status
   time_slots: { start_time: string; end_time: string } | null
 }
 
 export default function ReservationTable({
   reservations: initial,
-  password,
 }: {
   reservations: Reservation[]
-  password: string
 }) {
   const [reservations, setReservations] = useState(initial)
   const [loading, setLoading] = useState<string | null>(null)
+  const [error, setError] = useState<string | null>(null)
 
   async function updateStatus(id: string, status: 'confirmed' | 'cancelled') {
     setLoading(id)
-    const res = await fetch('/api/admin/reservations', {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${password}` },
-      body: JSON.stringify({ id, status }),
-    })
-    if (res.ok) {
-      const { reservation } = await res.json()
+    setError(null)
+    try {
+      const reservation = await updateReservationStatus(id, status)
       setReservations((prev) => prev.map((r) => (r.id === id ? reservation : r)))
+    } catch {
+      setError('Aktion fehlgeschlagen. Bitte versuche es erneut.')
+    } finally {
+      setLoading(null)
     }
-    setLoading(null)
   }
 
   // Group by date
@@ -47,12 +46,26 @@ export default function ReservationTable({
 
   return (
     <div className="space-y-10">
+      {error && (
+        <p className="text-sm text-red-600 bg-red-50 border border-red-200 rounded px-3 py-2">
+          {error}
+        </p>
+      )}
+      {Object.keys(grouped).length === 0 && (
+        <p className="text-sm text-muted">Keine Reservierungen vorhanden.</p>
+      )}
       {Object.entries(grouped)
         .sort(([a], [b]) => a.localeCompare(b))
         .map(([date, group]) => (
           <div key={date}>
             <h2 className="text-sm font-medium text-charcoal mb-3 tracking-wide">
-              {new Date(date).toLocaleDateString('de-DE', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
+              {new Date(date + 'T12:00:00').toLocaleDateString('de-DE', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                timeZone: 'Europe/Berlin',
+              })}
             </h2>
             <div className="divide-y divide-sand border border-sand rounded-sm">
               {group.map((r) => (

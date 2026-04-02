@@ -42,7 +42,7 @@ export default async function AdminPage({
           <h1 className="font-serif text-3xl text-charcoal tracking-brand uppercase">Jilebi Admin</h1>
           <span className="text-xs text-muted">{reservations?.length ?? 0} Reservierungen</span>
         </div>
-        <ReservationTable reservations={reservations ?? []} password={provided} />
+        <ReservationTable reservations={reservations ?? []} />
       </div>
     </main>
   )
