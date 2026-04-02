@@ -13,9 +13,9 @@ export default function Hero() {
           <h1 className="font-serif text-5xl md:text-6xl font-normal text-charcoal leading-tight mb-2">
             {t('headline')}
           </h1>
-          <h1 className="font-serif text-5xl md:text-6xl font-normal italic text-gold leading-tight">
+          <p className="font-serif text-5xl md:text-6xl font-normal italic text-gold leading-tight">
             {t('headline_accent')}
-          </h1>
+          </p>
           <GoldenRule className="mt-6" />
           <p className="text-muted text-sm leading-relaxed max-w-md mt-4 mb-8">{t('tagline')}</p>
           <div className="flex flex-col sm:flex-row gap-4">
