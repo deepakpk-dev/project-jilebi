@@ -2,7 +2,6 @@
 
 import { useState } from 'react'
 import StatusBadge, { Status } from '@/components/ui/StatusBadge'
-import { updateReservationStatus } from '@/app/[locale]/admin/actions'
 
 type Reservation = {
   id: string
@@ -18,10 +17,10 @@ type Reservation = {
 
 export default function ReservationTable({
   reservations: initial,
-  password,
+  updateStatus: boundUpdateStatus,
 }: {
   reservations: Reservation[]
-  password: string
+  updateStatus: (id: string, status: 'confirmed' | 'cancelled') => Promise<Reservation>
 }) {
   const [reservations, setReservations] = useState(initial)
   const [loading, setLoading] = useState<string | null>(null)
@@ -31,7 +30,7 @@ export default function ReservationTable({
     setLoading(id)
     setError(null)
     try {
-      const reservation = await updateReservationStatus(id, status, password)
+      const reservation = await boundUpdateStatus(id, status)
       setReservations((prev) => prev.map((r) => (r.id === id ? reservation : r)))
     } catch {
       setError('Aktion fehlgeschlagen. Bitte versuche es erneut.')
