@@ -30,7 +30,7 @@ export default function TimeSlotPicker({ slots, selected, onSelect }: Props) {
               : 'border-charcoal text-charcoal hover:border-gold hover:text-gold'
           }`}
         >
-          {slot.start_time} – {slot.end_time}
+          {slot.start_time.substring(0, 5)} – {slot.end_time.substring(0, 5)}
         </button>
       ))}
     </div>

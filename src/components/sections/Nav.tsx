@@ -10,7 +10,8 @@ export default function Nav() {
   const pathname = usePathname()
 
   const altLocale = locale === 'de' ? 'en' : 'de'
-  const altPath = locale === 'de' ? `/en${pathname}` : pathname.replace(/^\/en/, '') || '/'
+  const cleanPath = pathname.replace(/^\/(de|en)/, '') || '/'
+  const altPath = locale === 'de' ? `/en${cleanPath === '/' ? '' : cleanPath}` : cleanPath
 
   const navLinks = [
     { href: '#about', label: t('about') },
