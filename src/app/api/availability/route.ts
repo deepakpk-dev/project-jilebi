@@ -26,12 +26,13 @@ export async function GET(req: NextRequest) {
 
   const slotIds = slots.map((s) => s.id)
 
-  // Count booked party sizes per slot for this date
+  // Count booked party sizes per slot for this date (exclude cancelled)
   const { data: reservations, error: resError } = await getSupabase()
     .from('reservations')
     .select('time_slot_id, party_size')
     .eq('date', date)
     .in('time_slot_id', slotIds)
+    .neq('status', 'cancelled')
 
   if (resError) {
     return NextResponse.json({ error: resError.message }, { status: 500 })
