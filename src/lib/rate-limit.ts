@@ -1,4 +1,17 @@
-/** Simple in-memory sliding window rate limiter (no external dependencies). */
+/**
+ * Simple in-memory sliding window rate limiter (no external dependencies).
+ *
+ * Scope: per-instance. On Vercel Fluid Compute, multiple function instances
+ * can serve concurrent traffic, so the effective limit across all replicas
+ * is roughly N * limit where N is the active instance count. Good enough
+ * for casual abuse protection on a low-traffic reservation endpoint; not a
+ * strict global limit.
+ *
+ * If abuse appears, swap this for a shared store — recommended path is
+ * Upstash Redis via the Vercel Marketplace (Vercel KV is retired). The
+ * public API (rateLimit(key, limit, windowMs)) is deliberately narrow so
+ * the call sites in route handlers don't need to change.
+ */
 
 type Entry = { count: number; resetAt: number }
 const store = new Map<string, Entry>()

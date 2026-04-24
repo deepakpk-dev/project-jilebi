@@ -23,6 +23,22 @@ describe('GET /api/availability', () => {
     expect(body.error).toBe('date parameter required')
   })
 
+  it('returns 400 when date param is malformed', async () => {
+    const req = new NextRequest('http://localhost/api/availability?date=not-a-date')
+    const res = await GET(req)
+    expect(res.status).toBe(400)
+    const body = await res.json()
+    expect(body.error).toBe('date must be YYYY-MM-DD')
+  })
+
+  it('returns 400 when date is the wrong shape', async () => {
+    const req = new NextRequest('http://localhost/api/availability?date=2026-4-5')
+    const res = await GET(req)
+    expect(res.status).toBe(400)
+    const body = await res.json()
+    expect(body.error).toBe('date must be YYYY-MM-DD')
+  })
+
   it('returns empty slots when none exist for the day', async () => {
     mockFrom.mockReturnValueOnce({
       select: () => ({

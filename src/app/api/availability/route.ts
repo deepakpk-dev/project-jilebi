@@ -1,10 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getSupabase } from '@/lib/supabase'
 
+const DATE_RE = /^\d{4}-\d{2}-\d{2}$/
+
 export async function GET(req: NextRequest) {
   const date = req.nextUrl.searchParams.get('date')
   if (!date) {
     return NextResponse.json({ error: 'date parameter required' }, { status: 400 })
+  }
+  if (!DATE_RE.test(date) || Number.isNaN(Date.parse(date))) {
+    return NextResponse.json({ error: 'date must be YYYY-MM-DD' }, { status: 400 })
   }
 
   const dayOfWeek = new Date(date).getUTCDay()
