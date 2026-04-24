@@ -68,5 +68,22 @@
     "confirm_body": "We look forward to welcoming you. Here are your booking details:",
     "cancel_subject": "Your reservation at Jilebi — Cancellation",
     "cancel_body": "Unfortunately your reservation has been cancelled. Please contact us to make a new booking."
+  },
+  "admin": {
+    "title": "Jilebi Admin",
+    "reservations_count": "{count, plural, =0 {No reservations} one {# reservation} other {# reservations}}",
+    "fetch_error": "Error: {message}",
+    "empty": "No reservations yet.",
+    "action_error": "Action failed. Please try again.",
+    "persons_short": "guests",
+    "confirm": "Confirm",
+    "cancel": "Cancel",
+    "email_undelivered": "Email not delivered",
+    "login": {
+      "password_placeholder": "Password",
+      "submit": "Sign in",
+      "wrong_password": "Incorrect password",
+      "generic_error": "Sign-in failed"
+    }
   }
 }

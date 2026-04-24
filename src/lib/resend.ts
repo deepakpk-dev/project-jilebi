@@ -32,7 +32,14 @@ function formatDate(date: string, locale: string) {
   })
 }
 
-export async function sendConfirmationEmail(reservation: Reservation) {
+export async function sendConfirmationEmail(reservation: Reservation): Promise<boolean> {
+  if (!reservation.time_slots?.start_time || !reservation.time_slots?.end_time) {
+    console.error(
+      `[resend] skipping confirmation email for reservation ${reservation.id}: missing time_slots join`
+    )
+    return false
+  }
+
   const isDE = reservation.language !== 'en'
   const subject = isDE
     ? 'Ihre Reservierung bei Jilebi — Bestätigung'
@@ -40,8 +47,8 @@ export async function sendConfirmationEmail(reservation: Reservation) {
 
   const safeName = escapeHtml(reservation.name)
   const safeDate = escapeHtml(formatDate(reservation.date, isDE ? 'de' : 'en'))
-  const safeStart = escapeHtml(reservation.time_slots?.start_time ?? '')
-  const safeEnd = escapeHtml(reservation.time_slots?.end_time ?? '')
+  const safeStart = escapeHtml(reservation.time_slots.start_time)
+  const safeEnd = escapeHtml(reservation.time_slots.end_time)
 
   const html = isDE
     ? `<p>Liebe(r) ${safeName},</p>
@@ -59,7 +66,15 @@ export async function sendConfirmationEmail(reservation: Reservation) {
        <p>We look forward to welcoming you!</p>
        <p>The Jilebi Team<br>Nürtingen</p>`
 
-  await getResend().emails.send({ from: FROM, to: reservation.email, subject, html })
+  const result = await getResend().emails.send({ from: FROM, to: reservation.email, subject, html })
+  if (result.error) {
+    console.error(
+      `[resend] confirmation send failed for reservation ${reservation.id}:`,
+      result.error
+    )
+    return false
+  }
+  return true
 }
 
 export async function sendCancellationEmail(reservation: Reservation) {

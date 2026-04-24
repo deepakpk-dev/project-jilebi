@@ -84,8 +84,21 @@ export async function POST(req: NextRequest) {
 
   const reservation = data[0]
 
-  // Fire-and-forget confirmation email
-  sendConfirmationEmail(reservation).catch(console.error)
+  // Fire-and-forget confirmation email; record delivery timestamp so the
+  // admin dashboard can flag reservations with missing emails.
+  void (async () => {
+    try {
+      const delivered = await sendConfirmationEmail(reservation)
+      if (delivered) {
+        await getSupabaseAdmin()
+          .from('reservations')
+          .update({ email_sent_at: new Date().toISOString() })
+          .eq('id', reservation.id)
+      }
+    } catch (err) {
+      console.error('[reservations] confirmation email flow failed:', err)
+    }
+  })()
 
   return NextResponse.json({ reservation }, { status: 201 })
 }
