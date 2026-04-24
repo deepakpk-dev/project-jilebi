@@ -61,6 +61,9 @@ Public reservation endpoint is rate-limited to 5 requests per IP per minute via 
 
 → [`src/lib/rate-limit.ts`](src/lib/rate-limit.ts)
 
+### Tested end-to-end with mocked network
+Playwright specs under [`e2e/`](e2e/) drive the real UI across desktop and mobile viewports. Supabase and Resend are intercepted via `page.route()`, so the test proves the *product flow* — availability lookup, slot selection, form submission, success state — without brittle external dependencies. Unit tests under `src/app/api/**` cover the API routes themselves.
+
 ### Self-reviewed
 A full code review of the first pass is checked in at [`code-review.md`](code-review.md) with 10 findings across security, validation, and i18n, all closed across four commits. This is part of the project, not a separate artifact.
 
@@ -120,7 +123,8 @@ npm run dev        # http://localhost:3000
 
 # 5. Verify
 npm run lint       # ESLint
-npm test           # Jest — 18 tests / 6 suites
+npm test           # Jest — 18 unit tests / 6 suites
+npm run test:e2e   # Playwright — reservation flow + mobile nav, desktop + mobile viewports
 npm run build      # production build
 ```
 
