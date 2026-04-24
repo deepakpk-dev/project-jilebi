@@ -18,14 +18,23 @@ export async function GET(req: NextRequest) {
   return NextResponse.json({ reservations: data })
 }
 
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
+const ALLOWED_STATUSES = ['confirmed', 'cancelled'] as const
+
 export async function PATCH(req: NextRequest) {
   if (!isAdminAuthorized(req)) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
   const { id, status } = await req.json()
-  if (!id || !status) {
-    return NextResponse.json({ error: 'id and status required' }, { status: 400 })
+  if (typeof id !== 'string' || !UUID_RE.test(id)) {
+    return NextResponse.json({ error: 'Invalid id' }, { status: 400 })
+  }
+  if (!ALLOWED_STATUSES.includes(status)) {
+    return NextResponse.json(
+      { error: `status must be one of: ${ALLOWED_STATUSES.join(', ')}` },
+      { status: 400 }
+    )
   }
 
   const { data, error } = await getSupabaseAdmin()

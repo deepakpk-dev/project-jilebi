@@ -9,6 +9,13 @@ function getSecret(): string {
   return process.env.ADMIN_PASSWORD!
 }
 
+/** Constant-time string comparison. Hashes both sides so unequal lengths don't throw. */
+function timingSafeStringEqual(a: string, b: string): boolean {
+  const aHash = crypto.createHash('sha256').update(a).digest()
+  const bHash = crypto.createHash('sha256').update(b).digest()
+  return crypto.timingSafeEqual(aHash, bHash)
+}
+
 /** Create a signed session token (HMAC of timestamp) */
 function createSessionToken(): string {
   const payload = `admin:${Date.now()}`
@@ -29,7 +36,7 @@ function verifySessionToken(token: string): boolean {
     .createHmac('sha256', getSecret())
     .update(payload)
     .digest('hex')
-  if (signature !== expected) return false
+  if (!timingSafeStringEqual(signature, expected)) return false
 
   // Check expiry
   const timestamp = parseInt(payload.split(':')[1], 10)
@@ -39,7 +46,8 @@ function verifySessionToken(token: string): boolean {
 
 /** Verify admin password and set httpOnly session cookie */
 export async function loginAdmin(password: string): Promise<NextResponse> {
-  if (password !== process.env.ADMIN_PASSWORD) {
+  const expected = process.env.ADMIN_PASSWORD
+  if (!expected || !timingSafeStringEqual(password, expected)) {
     return NextResponse.json({ error: 'Invalid password' }, { status: 401 })
   }
 

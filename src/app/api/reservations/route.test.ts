@@ -22,7 +22,7 @@ const validBody = {
   phone: '+49 7022 123456',
   party_size: 2,
   date: '2026-04-15',
-  time_slot_id: 'slot-uuid-123',
+  time_slot_id: '550e8400-e29b-41d4-a716-446655440000',
   notes: '',
   language: 'de',
 }

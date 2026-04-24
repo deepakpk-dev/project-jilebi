@@ -14,6 +14,15 @@ type Reservation = {
   time_slots?: { start_time: string; end_time: string } | null
 }
 
+function escapeHtml(value: string): string {
+  return value
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;')
+}
+
 function formatDate(date: string, locale: string) {
   return new Date(date).toLocaleDateString(locale === 'en' ? 'en-GB' : 'de-DE', {
     weekday: 'long',
@@ -29,18 +38,23 @@ export async function sendConfirmationEmail(reservation: Reservation) {
     ? 'Ihre Reservierung bei Jilebi — Bestätigung'
     : 'Your reservation at Jilebi — Confirmation'
 
+  const safeName = escapeHtml(reservation.name)
+  const safeDate = escapeHtml(formatDate(reservation.date, isDE ? 'de' : 'en'))
+  const safeStart = escapeHtml(reservation.time_slots?.start_time ?? '')
+  const safeEnd = escapeHtml(reservation.time_slots?.end_time ?? '')
+
   const html = isDE
-    ? `<p>Liebe(r) ${reservation.name},</p>
+    ? `<p>Liebe(r) ${safeName},</p>
        <p>vielen Dank für Ihre Reservierung bei <strong>Jilebi</strong>.</p>
-       <p><strong>Datum:</strong> ${formatDate(reservation.date, 'de')}<br>
-       <strong>Uhrzeit:</strong> ${reservation.time_slots?.start_time ?? ''} – ${reservation.time_slots?.end_time ?? ''}<br>
+       <p><strong>Datum:</strong> ${safeDate}<br>
+       <strong>Uhrzeit:</strong> ${safeStart} – ${safeEnd}<br>
        <strong>Personen:</strong> ${reservation.party_size}</p>
        <p>Wir freuen uns auf Ihren Besuch!</p>
        <p>Ihr Jilebi-Team<br>Nürtingen</p>`
-    : `<p>Dear ${reservation.name},</p>
+    : `<p>Dear ${safeName},</p>
        <p>Thank you for reserving a table at <strong>Jilebi</strong>.</p>
-       <p><strong>Date:</strong> ${formatDate(reservation.date, 'en')}<br>
-       <strong>Time:</strong> ${reservation.time_slots?.start_time ?? ''} – ${reservation.time_slots?.end_time ?? ''}<br>
+       <p><strong>Date:</strong> ${safeDate}<br>
+       <strong>Time:</strong> ${safeStart} – ${safeEnd}<br>
        <strong>Guests:</strong> ${reservation.party_size}</p>
        <p>We look forward to welcoming you!</p>
        <p>The Jilebi Team<br>Nürtingen</p>`
@@ -54,13 +68,16 @@ export async function sendCancellationEmail(reservation: Reservation) {
     ? 'Ihre Reservierung bei Jilebi — Stornierung'
     : 'Your reservation at Jilebi — Cancellation'
 
+  const safeName = escapeHtml(reservation.name)
+  const safeDate = escapeHtml(formatDate(reservation.date, isDE ? 'de' : 'en'))
+
   const html = isDE
-    ? `<p>Liebe(r) ${reservation.name},</p>
-       <p>Ihre Reservierung am ${formatDate(reservation.date, 'de')} wurde leider storniert.</p>
+    ? `<p>Liebe(r) ${safeName},</p>
+       <p>Ihre Reservierung am ${safeDate} wurde leider storniert.</p>
        <p>Bitte kontaktieren Sie uns für eine neue Buchung.</p>
        <p>Ihr Jilebi-Team</p>`
-    : `<p>Dear ${reservation.name},</p>
-       <p>Unfortunately your reservation on ${formatDate(reservation.date, 'en')} has been cancelled.</p>
+    : `<p>Dear ${safeName},</p>
+       <p>Unfortunately your reservation on ${safeDate} has been cancelled.</p>
        <p>Please contact us to make a new booking.</p>
        <p>The Jilebi Team</p>`
 

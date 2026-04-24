@@ -1,5 +1,5 @@
 import { useTranslations, useLocale } from 'next-intl'
-import Link from 'next/link'
+import { Link } from '@/i18n/navigation'
 
 const HOURS = [
   { dayDE: 'Montag', dayEN: 'Monday', hours: null },
@@ -76,10 +76,10 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto mt-12 pt-6 border-t border-ivory/10 flex flex-col sm:flex-row justify-between items-center gap-4">
         <p className="text-xs text-ivory/30">{t('copyright')}</p>
         <div className="flex gap-6">
-          <Link href={locale === 'en' ? '/en/impressum' : '/impressum'} className="text-xs text-ivory/30 hover:text-ivory transition-colors">
+          <Link href="/impressum" className="text-xs text-ivory/30 hover:text-ivory transition-colors">
             {t('impressum')}
           </Link>
-          <Link href={locale === 'en' ? '/en/datenschutz' : '/datenschutz'} className="text-xs text-ivory/30 hover:text-ivory transition-colors">
+          <Link href="/datenschutz" className="text-xs text-ivory/30 hover:text-ivory transition-colors">
             {t('datenschutz')}
           </Link>
         </div>
