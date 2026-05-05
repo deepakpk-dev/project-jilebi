@@ -45,7 +45,12 @@ export default function AdminLogin() {
         required
         className="border-b border-sand bg-transparent pb-2 text-sm text-charcoal placeholder-muted focus:border-gold focus:outline-none"
       />
-      {error && <p className="text-xs text-red-500">{error}</p>}
+      {error && (
+        <p className="flex items-center gap-2 text-xs text-charcoal">
+          <span aria-hidden="true" className="block w-1 h-1 rounded-full bg-chili flex-shrink-0" />
+          {error}
+        </p>
+      )}
       <button type="submit" disabled={loading} className="btn-primary disabled:opacity-40">
         {loading ? '...' : tLogin('submit')}
       </button>

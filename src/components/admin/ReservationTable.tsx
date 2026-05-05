@@ -55,7 +55,8 @@ export default function ReservationTable({
   return (
     <div className="space-y-10">
       {error && (
-        <p className="text-sm text-red-600 bg-red-50 border border-red-200 rounded px-3 py-2">
+        <p className="flex items-start gap-2 text-sm text-charcoal bg-chili/8 border border-chili/20 px-3 py-2">
+          <span aria-hidden="true" className="mt-[3px] block w-1.5 h-1.5 rounded-full bg-chili flex-shrink-0" />
           {error}
         </p>
       )}
@@ -85,7 +86,7 @@ export default function ReservationTable({
                       {r.status !== 'cancelled' && !r.email_sent_at && (
                         <span
                           title={r.email}
-                          className="text-[10px] uppercase tracking-wide px-1.5 py-0.5 bg-amber-50 text-amber-800 border border-amber-200 rounded-sm"
+                          className="text-[10px] uppercase tracking-wide px-1.5 py-0.5 bg-gold/10 text-charcoal border border-sand"
                         >
                           {t('email_undelivered')}
                         </span>
@@ -102,7 +103,7 @@ export default function ReservationTable({
                         type="button"
                         onClick={() => updateStatus(r.id, 'confirmed')}
                         disabled={loading === r.id}
-                        className="px-3 py-1.5 text-xs bg-green-600 text-white hover:bg-green-700 disabled:opacity-40"
+                        className="px-3 py-1.5 text-[10px] tracking-widest uppercase bg-charcoal text-ivory hover:bg-gold disabled:opacity-40 transition-colors"
                       >
                         {t('confirm')}
                       </button>
@@ -110,7 +111,7 @@ export default function ReservationTable({
                         type="button"
                         onClick={() => updateStatus(r.id, 'cancelled')}
                         disabled={loading === r.id}
-                        className="px-3 py-1.5 text-xs bg-red-600 text-white hover:bg-red-700 disabled:opacity-40"
+                        className="px-3 py-1.5 text-[10px] tracking-widest uppercase border border-charcoal/25 text-muted hover:border-chili hover:text-chili disabled:opacity-40 transition-colors"
                       >
                         {t('cancel')}
                       </button>

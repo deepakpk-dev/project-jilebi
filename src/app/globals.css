@@ -3,6 +3,16 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    --color-ivory:   #FDFAF5;
+    --color-charcoal:#1C1C1C;
+    --color-gold:    #C9923A;
+    --color-muted:   #7A6E5A;
+    --color-sand:    #E8E0D4;
+    --color-leaf:    #6F8F4A;
+    --color-chili:   #B65C3F;
+  }
+
   html {
     scroll-behavior: smooth;
   }
@@ -31,7 +41,7 @@
   }
   /* Keyboard focus ring — applies to anything that doesn't override it */
   :focus-visible {
-    outline: 2px solid #c9923a;
+    outline: 2px solid var(--color-gold);
     outline-offset: 3px;
     border-radius: 2px;
   }
@@ -70,8 +80,8 @@
 
 /* react-day-picker v9 — brand overrides */
 .rdp-root {
-  --rdp-accent-color: #c9923a;
-  --rdp-accent-background-color: rgba(201, 146, 58, 0.12);
+  --rdp-accent-color: var(--color-gold);
+  --rdp-accent-background-color: color-mix(in srgb, var(--color-gold) 12%, transparent);
   --rdp-day-height: 2.25rem;
   --rdp-day-width: 2.25rem;
   --rdp-day_button-border-radius: 999px;
@@ -80,41 +90,41 @@
   --rdp-weekday-text-transform: uppercase;
   --rdp-weekday-font-size: 0.625rem;
   --rdp-weekday-letter-spacing: 0.2em;
-  color: #1c1c1c;
+  color: var(--color-charcoal);
 }
 .rdp-root .rdp-month_caption {
   font-family: Georgia, Cambria, 'Times New Roman', serif;
   font-style: italic;
   font-weight: 400;
   font-size: 1.125rem;
-  color: #1c1c1c;
+  color: var(--color-charcoal);
 }
 .rdp-root .rdp-weekday {
-  color: #7a6e5a;
+  color: var(--color-muted);
 }
 .rdp-root .rdp-day_button {
   font-size: 0.8125rem;
 }
 .rdp-root .rdp-day_button:hover:not(:disabled):not(.rdp-selected) {
-  background-color: rgba(201, 146, 58, 0.12);
+  background-color: color-mix(in srgb, var(--color-gold) 12%, transparent);
 }
 .rdp-root .rdp-selected .rdp-day_button {
-  background-color: #c9923a;
-  color: #fdfaf5;
+  background-color: var(--color-gold);
+  color: var(--color-ivory);
 }
 .rdp-root .rdp-today:not(.rdp-selected) .rdp-day_button {
-  color: #c9923a;
+  color: var(--color-gold);
   font-weight: 500;
 }
 .rdp-root .rdp-disabled {
-  color: rgba(28, 28, 28, 0.3);
+  color: color-mix(in srgb, var(--color-charcoal) 30%, transparent);
 }
 .rdp-root .rdp-chevron {
-  fill: #7a6e5a;
+  fill: var(--color-muted);
 }
 .rdp-root .rdp-button_previous:hover .rdp-chevron,
 .rdp-root .rdp-button_next:hover .rdp-chevron {
-  fill: #c9923a;
+  fill: var(--color-gold);
 }
 
 @layer utilities {
