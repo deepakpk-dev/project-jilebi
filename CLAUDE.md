@@ -11,7 +11,7 @@ Bilingual (DE/EN) restaurant website with real-time table reservations. Next.js 
 | `npm run dev` | Dev server at http://localhost:3000 |
 | `npm run build` | Production build (must pass before pushing) |
 | `npm run lint` | ESLint with next/core-web-vitals |
-| `npm test` | Jest — 16 tests across 6 suites |
+| `npm test` | Jest — 22 tests across 6 suites |
 | `npm run test:watch` | Jest watch mode |
 
 Always run `npm run lint`, `npm test`, and `npm run build` before committing.
@@ -69,7 +69,7 @@ Admin uses HMAC-signed httpOnly cookie sessions (not bearer tokens):
 - Admin endpoints check `isAdminAuthorized(req)` via cookie
 - `POST /api/reservations` is rate-limited (5/min/IP via `src/lib/rate-limit.ts`)
 - Capacity errors from the Postgres trigger return 409 Conflict
-- Confirmation emails are fire-and-forget: `sendConfirmationEmail(reservation).catch(console.error)`
+- The reservation POST awaits `sendConfirmationEmail` (a "request received" email) and records `email_sent_at` on delivery; email failure never fails the reservation. When an admin confirms a reservation, `sendReservationConfirmedEmail` is sent from the server action (also non-fatal on failure)
 
 ## Testing
 

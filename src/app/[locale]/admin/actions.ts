@@ -2,7 +2,7 @@
 
 import { getSupabaseAdmin } from '@/lib/supabase'
 import { isAdminSession } from '@/lib/auth'
-import { sendCancellationEmail } from '@/lib/resend'
+import { sendCancellationEmail, sendReservationConfirmedEmail } from '@/lib/resend'
 
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
 const ALLOWED_STATUSES = ['confirmed', 'cancelled'] as const
@@ -31,6 +31,13 @@ export async function updateReservationStatus(id: string, status: 'confirmed' | 
       await sendCancellationEmail(data)
     } catch (err) {
       console.error('[admin action] cancellation email failed:', err)
+    }
+  } else if (status === 'confirmed') {
+    // Email delivery must never roll back a status change that already committed.
+    try {
+      await sendReservationConfirmedEmail(data)
+    } catch (err) {
+      console.error('[admin action] confirmed email failed:', err)
     }
   }
 

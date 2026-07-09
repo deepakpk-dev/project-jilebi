@@ -68,7 +68,9 @@
     "success_party": "{count, plural, one {# Gast} other {# Gäste}}",
     "success_email": "Bestätigung folgt an {email}.",
     "success_book_another": "Weitere Reservierung",
-    "error": "Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut."
+    "error": "Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut.",
+    "error_slot_full": "Diese Uhrzeit ist soeben ausgebucht. Bitte wählen Sie eine andere Zeit — die Verfügbarkeit wurde aktualisiert.",
+    "error_rate_limited": "Zu viele Versuche. Bitte warten Sie eine Minute und versuchen Sie es erneut."
   },
   "gallery": {
     "label": "Einblicke",
@@ -110,6 +112,9 @@
     "confirm": "Bestätigen",
     "cancel": "Stornieren",
     "email_undelivered": "E-Mail nicht zugestellt",
+    "logout": "Abmelden",
+    "show_all": "Alle anzeigen",
+    "show_upcoming": "Nur anstehende",
     "login": {
       "password_placeholder": "Passwort",
       "submit": "Anmelden",
