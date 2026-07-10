@@ -115,6 +115,24 @@
     "logout": "Abmelden",
     "show_all": "Alle anzeigen",
     "show_upcoming": "Nur anstehende",
+    "slots": {
+      "title": "Zeitfenster",
+      "blocked": "Gesperrt",
+      "open": "Offen",
+      "block": "Sperren",
+      "unblock": "Freigeben",
+      "capacity": "{count} Plätze",
+      "upcoming_warning": "{count, plural, one {# anstehende Reservierung} other {# anstehende Reservierungen}}",
+      "days": {
+        "0": "Sonntag",
+        "1": "Montag",
+        "2": "Dienstag",
+        "3": "Mittwoch",
+        "4": "Donnerstag",
+        "5": "Freitag",
+        "6": "Samstag"
+      }
+    },
     "login": {
       "password_placeholder": "Passwort",
       "submit": "Anmelden",

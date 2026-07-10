@@ -247,6 +247,7 @@ Fill in:
 | `RESEND_FROM_EMAIL` | Sender address for reservation emails |
 | `ADMIN_PASSWORD` | Admin password and HMAC signing secret |
 | `APP_ORIGIN` | Optional trusted origin override for same-origin checks |
+| `NEXT_PUBLIC_SITE_URL` | Canonical site origin for SEO metadata (sitemap, canonical URLs, Open Graph) |
 
 ### Database Setup
 

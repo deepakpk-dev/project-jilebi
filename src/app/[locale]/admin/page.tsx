@@ -1,9 +1,11 @@
 import { getSupabaseAdmin } from '@/lib/supabase'
 import { isAdminSession } from '@/lib/auth'
+import { getBerlinToday } from '@/lib/request-security'
 import ReservationTable from '@/components/admin/ReservationTable'
+import SlotManager from '@/components/admin/SlotManager'
 import AdminLogin from '@/components/admin/AdminLogin'
 import LogoutButton from '@/components/admin/LogoutButton'
-import { updateReservationStatus } from './actions'
+import { updateReservationStatus, updateSlotBlocked } from './actions'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 import { Link } from '@/i18n/navigation'
 
@@ -30,12 +32,7 @@ export default async function AdminPage({
     )
   }
 
-  // "Today" in the restaurant's timezone, formatted YYYY-MM-DD to match the
-  // `date` column. Using UTC would hide today's bookings between midnight and
-  // ~02:00 Berlin time.
-  const todayBerlin = new Intl.DateTimeFormat('en-CA', {
-    timeZone: 'Europe/Berlin',
-  }).format(new Date())
+  const todayBerlin = getBerlinToday()
 
   let query = getSupabaseAdmin()
     .from('reservations')
@@ -46,6 +43,30 @@ export default async function AdminPage({
 
   if (error) {
     return <main className="p-8 text-red-600">{t('fetch_error', { message: error.message })}</main>
+  }
+
+  const { data: slots, error: slotsError } = await getSupabaseAdmin()
+    .from('time_slots')
+    .select('id, day_of_week, start_time, end_time, max_capacity, is_blocked')
+    .order('day_of_week', { ascending: true })
+    .order('start_time', { ascending: true })
+
+  if (slotsError) {
+    return (
+      <main className="p-8 text-red-600">{t('fetch_error', { message: slotsError.message })}</main>
+    )
+  }
+
+  // Active future reservations per slot, so blocking shows what it would strand.
+  const { data: upcoming } = await getSupabaseAdmin()
+    .from('reservations')
+    .select('time_slot_id')
+    .gte('date', todayBerlin)
+    .neq('status', 'cancelled')
+
+  const upcomingCountBySlot: Record<string, number> = {}
+  for (const r of upcoming ?? []) {
+    upcomingCountBySlot[r.time_slot_id] = (upcomingCountBySlot[r.time_slot_id] ?? 0) + 1
   }
 
   return (
@@ -71,6 +92,14 @@ export default async function AdminPage({
           updateStatus={updateReservationStatus}
           locale={locale}
         />
+
+        <div className="mt-16">
+          <SlotManager
+            slots={slots ?? []}
+            upcomingCounts={upcomingCountBySlot}
+            updateSlot={updateSlotBlocked}
+          />
+        </div>
       </div>
     </main>
   )

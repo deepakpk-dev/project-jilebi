@@ -11,7 +11,7 @@ Bilingual (DE/EN) restaurant website with real-time table reservations. Next.js 
 | `npm run dev` | Dev server at http://localhost:3000 |
 | `npm run build` | Production build (must pass before pushing) |
 | `npm run lint` | ESLint with next/core-web-vitals |
-| `npm test` | Jest — 22 tests across 6 suites |
+| `npm test` | Jest — 26 tests across 6 suites |
 | `npm run test:watch` | Jest watch mode |
 
 Always run `npm run lint`, `npm test`, and `npm run build` before committing.

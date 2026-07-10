@@ -35,6 +35,15 @@ export function getUtcDayOfWeek(dateOnly: string): number {
   return new Date(Date.UTC(year, month - 1, day)).getUTCDay()
 }
 
+/**
+ * Today's date in the restaurant's timezone (Europe/Berlin), formatted as
+ * YYYY-MM-DD to match the `date` column. Using UTC would roll to the next day
+ * between local midnight and ~01:00/02:00, hiding or mis-bucketing same-day rows.
+ */
+export function getBerlinToday(now = new Date()): string {
+  return new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Berlin' }).format(now)
+}
+
 export function isWithinReservationWindow(dateOnly: string, now = new Date()): boolean {
   const [year, month, day] = dateOnly.split('-').map(Number)
   const requested = Date.UTC(year, month - 1, day)
