@@ -78,6 +78,7 @@ Admin uses HMAC-signed httpOnly cookie sessions (not bearer tokens):
 - Mock Resend and rate-limit modules to isolate tests
 - API route tests use `@jest-environment node`; component tests use jsdom
 - Test files live next to source: `route.test.ts`, `Component.test.tsx`
+- E2E (`npm run test:e2e`, Playwright): `e2e/reservation.spec.ts` mocks `/api/*` at the browser layer (desktop + mobile projects); `e2e/journeys.spec.ts` drives full-stack guest + admin journeys through the real routes/server actions against `e2e/support/mock-supabase.mjs` (a PostgREST + Resend stand-in) on the single-instance `journeys` project. Playwright starts both the mock and `next dev` via its `webServer` array — point the app at the mock with `NEXT_PUBLIC_SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, and `RESEND_BASE_URL`.
 
 ## Environment Variables
 
