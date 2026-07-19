@@ -111,6 +111,58 @@ test.describe('Reservation flow', () => {
     await expect(page.getByRole('heading', { name: 'Reservierung erhalten!' })).toBeVisible()
   })
 
+  test('a capacity conflict shows a specific message and refreshes availability', async ({
+    page,
+  }) => {
+    let availabilityCalls = 0
+    let releaseConflict: (() => void) | undefined
+    const conflictResponse = new Promise<void>((resolve) => {
+      releaseConflict = resolve
+    })
+    await page.route('**/api/availability*', async (route) => {
+      availabilityCalls++
+      const slots =
+        availabilityCalls === 1
+          ? MOCK_SLOTS.slots
+          : [
+              { ...MOCK_SLOTS.slots[0], booked: 15, available: true },
+              MOCK_SLOTS.slots[1],
+            ]
+      await route.fulfill({
+        status: 200,
+        contentType: 'application/json',
+        body: JSON.stringify({ slots }),
+      })
+    })
+    await page.route('**/api/reservations', async (route) => {
+      if (route.request().method() !== 'POST') return route.fallback()
+      await conflictResponse
+      await route.fulfill({
+        status: 409,
+        contentType: 'application/json',
+        body: JSON.stringify({ error: 'This time slot is fully booked' }),
+      })
+    })
+
+    await page.goto('/de')
+    await pickFirstAvailableDay(page)
+    await page.locator('#res-party').selectOption('6')
+    await page.getByRole('button', { name: /18:00\s*[–-]\s*20:00/ }).click()
+    await page.getByPlaceholder('Ihr Name').fill('Maria Müller')
+    await page.getByPlaceholder('E-Mail-Adresse').fill('maria@example.de')
+    await page.getByPlaceholder('Telefonnummer').fill('+49 7022 555 0123')
+
+    const callsBefore = availabilityCalls
+    await page.getByRole('button', { name: 'Jetzt reservieren' }).click()
+    await expect(page.locator('#res-party')).toBeDisabled()
+    releaseConflict?.()
+
+    await expect(page.getByText(/soeben ausgebucht/)).toBeVisible()
+    await expect.poll(() => availabilityCalls).toBeGreaterThan(callsBefore)
+    await expect(page.getByRole('button', { name: /18:00\s*[–-]\s*20:00/ })).toBeDisabled()
+    await expect(page.getByRole('button', { name: 'Jetzt reservieren' })).toBeDisabled()
+  })
+
   test('fully-booked slots are visible but cannot be selected', async ({ page }) => {
     // Tighten the mock: mark the 20:00 slot as unavailable for this case
     await page.route('**/api/availability*', async (route) => {

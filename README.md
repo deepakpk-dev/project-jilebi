@@ -162,7 +162,8 @@ The project includes layered automated checks:
 
 - **Unit tests:** API route behavior and UI components with Jest and Testing Library.
 - **E2E tests:** Playwright drives the real localized UI across desktop and mobile contexts.
-- **Network mocking:** E2E specs intercept Supabase-facing reservation and availability requests, keeping product-flow tests deterministic.
+- **Network mocking:** `reservation.spec.ts` intercepts Supabase-facing reservation and availability requests at the browser layer, keeping product-flow tests deterministic.
+- **Full-stack journeys:** `journeys.spec.ts` drives complete guest and admin journeys through the real API routes and server actions — the booking flow, capacity-aware slots, the 409 conflict path, admin login, the confirm and slot-block actions, and logout — against a small PostgREST + Resend stand-in (`e2e/support/mock-supabase.mjs`) so no live services are needed in CI.
 - **CI:** GitHub Actions runs install, lint, unit tests, production build, Playwright browser install, and E2E tests on pushes and pull requests to `master`.
 - **Security hardening trail:** The migrations and API modules document the validation, auth, RLS, and consistency work directly in versioned source.
 
@@ -205,7 +206,10 @@ supabase/
   migrations/               Schema, RLS, email tracking, security hardening
 
 e2e/
-  reservation.spec.ts       Playwright booking flow and mobile navigation tests
+  reservation.spec.ts       Playwright booking flow and mobile navigation tests (browser-mocked)
+  journeys.spec.ts          Full-stack guest + admin journeys (real API routes)
+  support/
+    mock-supabase.mjs       PostgREST + Resend stand-in for the journeys suite
 
 scripts/
   optimize-images.mjs       Sharp-based image optimization
@@ -247,6 +251,7 @@ Fill in:
 | `RESEND_FROM_EMAIL` | Sender address for reservation emails |
 | `ADMIN_PASSWORD` | Admin password and HMAC signing secret |
 | `APP_ORIGIN` | Optional trusted origin override for same-origin checks |
+| `NEXT_PUBLIC_SITE_URL` | Canonical site origin for SEO metadata (sitemap, canonical URLs, Open Graph) |
 
 ### Database Setup
 

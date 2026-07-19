@@ -68,7 +68,9 @@
     "success_party": "{count, plural, one {# guest} other {# guests}}",
     "success_email": "A confirmation is on its way to {email}.",
     "success_book_another": "Book another",
-    "error": "Something went wrong. Please try again."
+    "error": "Something went wrong. Please try again.",
+    "error_slot_full": "This time slot just filled up. Please pick another time — we've refreshed the availability for you.",
+    "error_rate_limited": "Too many attempts. Please wait a minute and try again."
   },
   "gallery": {
     "label": "A Glimpse Inside",
@@ -110,6 +112,27 @@
     "confirm": "Confirm",
     "cancel": "Cancel",
     "email_undelivered": "Email not delivered",
+    "logout": "Sign out",
+    "show_all": "Show all",
+    "show_upcoming": "Upcoming only",
+    "slots": {
+      "title": "Time Slots",
+      "blocked": "Blocked",
+      "open": "Open",
+      "block": "Block",
+      "unblock": "Unblock",
+      "capacity": "{count} seats",
+      "upcoming_warning": "{count, plural, one {# upcoming reservation} other {# upcoming reservations}}",
+      "days": {
+        "0": "Sunday",
+        "1": "Monday",
+        "2": "Tuesday",
+        "3": "Wednesday",
+        "4": "Thursday",
+        "5": "Friday",
+        "6": "Saturday"
+      }
+    },
     "login": {
       "password_placeholder": "Password",
       "submit": "Sign in",

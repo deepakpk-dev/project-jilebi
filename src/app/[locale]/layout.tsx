@@ -4,6 +4,7 @@ import { NextIntlClientProvider } from 'next-intl'
 import { getMessages, getTranslations, setRequestLocale } from 'next-intl/server'
 import { notFound } from 'next/navigation'
 import { routing } from '@/i18n/routing'
+import { SITE_URL } from '@/lib/site'
 import Nav from '@/components/sections/Nav'
 import '../globals.css'
 
@@ -21,25 +22,31 @@ export async function generateMetadata({
   const { locale } = await params
   const t = await getTranslations({ locale, namespace: 'meta' })
   return {
-    metadataBase: new URL('https://jilebi.example'),
+    metadataBase: new URL(SITE_URL),
     title: { default: t('title'), template: '%s · Jilebi' },
     description: t('description'),
     openGraph: {
       title: t('title'),
       description: t('description'),
       siteName: 'Jilebi',
+      url: `/${locale}`,
+      images: ['/hero.jpg'],
       locale: locale === 'de' ? 'de_DE' : 'en_GB',
+      alternateLocale: locale === 'de' ? 'en_GB' : 'de_DE',
       type: 'website',
     },
     twitter: {
       card: 'summary_large_image',
       title: t('title'),
       description: t('description'),
+      images: ['/hero.jpg'],
     },
     alternates: {
+      canonical: `/${locale}`,
       languages: {
         de: '/de',
         en: '/en',
+        'x-default': '/de',
       },
     },
   }

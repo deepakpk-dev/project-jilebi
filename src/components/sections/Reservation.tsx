@@ -33,6 +33,10 @@ const initialForm: FormState = {
   notes: '',
 }
 
+function canFitParty(slot: Slot, partySize: number): boolean {
+  return slot.available && slot.max_capacity - slot.booked >= partySize
+}
+
 export default function Reservation() {
   const t = useTranslations('reservation')
   const locale = useLocale()
@@ -56,12 +60,11 @@ export default function Reservation() {
   const today = startOfToday()
   const maxDate = addDays(today, 30)
 
-  async function handleDateSelect(date: Date | undefined) {
-    setSelectedDate(date)
-    setSelectedSlotId(null)
-    setError(null)
-    if (!date) return
-
+  // Shared availability fetch. Goes through abortRef so that changing the date
+  // during an in-flight load (or a post-409 refresh) cancels the stale request
+  // instead of letting it overwrite the current date's slots. Returns the fresh
+  // slots, or null when the request was aborted.
+  async function loadSlots(date: Date): Promise<Slot[] | null> {
     abortRef.current?.abort()
     const controller = new AbortController()
     abortRef.current = controller
@@ -73,14 +76,25 @@ export default function Reservation() {
       })
       if (!res.ok) throw new Error('Failed to load availability')
       const data = await res.json()
-      setSlots(data.slots ?? [])
+      const fresh: Slot[] = data.slots ?? []
+      setSlots(fresh)
+      return fresh
     } catch (err) {
-      if (err instanceof DOMException && err.name === 'AbortError') return
+      if (err instanceof DOMException && err.name === 'AbortError') return null
       setSlots([])
       setError(t('error'))
+      return []
     } finally {
       setLoadingSlots(false)
     }
+  }
+
+  async function handleDateSelect(date: Date | undefined) {
+    setSelectedDate(date)
+    setSelectedSlotId(null)
+    setError(null)
+    if (!date) return
+    await loadSlots(date)
   }
 
   async function handleSubmit(e: React.FormEvent) {
@@ -103,7 +117,22 @@ export default function Reservation() {
           language: locale,
         }),
       })
-      if (!res.ok) throw new Error()
+      if (!res.ok) {
+        // Branch on status, never on the (unlocalized) error body.
+        if (res.status === 409) {
+          setError(t('error_slot_full'))
+          const fresh = await loadSlots(selectedDate)
+          // Drop the stale selection if that slot is now full or gone.
+          if (fresh && !fresh.some((s) => s.id === selectedSlotId && canFitParty(s, partySize))) {
+            setSelectedSlotId(null)
+          }
+        } else if (res.status === 429) {
+          setError(t('error_rate_limited'))
+        } else {
+          setError(t('error'))
+        }
+        return
+      }
       setConfirmed({
         date: selectedDate,
         slotLabel: `${slot.start_time.substring(0, 5)} – ${slot.end_time.substring(0, 5)}`,
@@ -125,6 +154,22 @@ export default function Reservation() {
     setSlots([])
     setForm(initialForm)
     setError(null)
+  }
+
+  // The server's `available` flag is `booked < max_capacity`, so a slot with
+  // 19/20 seats booked still reads as available for a party of 6 — a guaranteed
+  // 409. Narrow availability to slots whose remaining seats fit the party size.
+  const partySize = parseInt(form.party_size, 10)
+  const displaySlots: Slot[] = slots.map((s) => ({
+    ...s,
+    available: canFitParty(s, partySize),
+  }))
+
+  function handlePartySizeChange(value: string) {
+    setForm({ ...form, party_size: value })
+    const n = parseInt(value, 10)
+    const sel = slots.find((s) => s.id === selectedSlotId)
+    if (sel && sel.max_capacity - sel.booked < n) setSelectedSlotId(null)
   }
 
   const fieldClass =
@@ -218,7 +263,7 @@ export default function Reservation() {
                     <p className="text-xs text-muted">{t('no_slots')}</p>
                   ) : (
                     <TimeSlotPicker
-                      slots={slots}
+                      slots={displaySlots}
                       selected={selectedSlotId}
                       onSelect={setSelectedSlotId}
                     />
@@ -292,7 +337,8 @@ export default function Reservation() {
                   id="res-party"
                   name="party_size"
                   value={form.party_size}
-                  onChange={(e) => setForm({ ...form, party_size: e.target.value })}
+                  onChange={(e) => handlePartySizeChange(e.target.value)}
+                  disabled={submitting}
                   className={fieldClass}
                 >
                   {Array.from({ length: 10 }, (_, i) => i + 1).map((n) => (
