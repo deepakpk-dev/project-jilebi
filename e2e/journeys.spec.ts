@@ -24,11 +24,27 @@ test.beforeEach(async ({ request }) => {
 })
 
 async function pickFirstDay(page: Page) {
-  const enabled = page.locator('[role="gridcell"] button:not([disabled])')
-  if ((await enabled.count()) === 0) {
-    await page.getByRole('button', { name: /next month/i }).click()
+  for (let month = 0; month < 2; month++) {
+    const enabled = page.locator('[role="gridcell"] button:not([disabled])')
+
+    for (let i = 0; i < (await enabled.count()); i++) {
+      await enabled.nth(i).click()
+      try {
+        await page
+          .getByRole('button', { name: /18:00\s*[–-]\s*20:00/ })
+          .waitFor({ state: 'visible', timeout: 2_000 })
+        return
+      } catch {
+        // Skip closed restaurant days even though the calendar date is selectable.
+      }
+    }
+
+    if (month === 0) {
+      await page.getByRole('button', { name: /next month/i }).click()
+    }
   }
-  await enabled.first().click()
+
+  throw new Error('No reservable day found in the current or next month')
 }
 
 test('guest — booking, capacity-aware slots, 409, and language switch', async ({ page }) => {

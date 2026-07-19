@@ -33,6 +33,10 @@ const initialForm: FormState = {
   notes: '',
 }
 
+function canFitParty(slot: Slot, partySize: number): boolean {
+  return slot.available && slot.max_capacity - slot.booked >= partySize
+}
+
 export default function Reservation() {
   const t = useTranslations('reservation')
   const locale = useLocale()
@@ -119,7 +123,7 @@ export default function Reservation() {
           setError(t('error_slot_full'))
           const fresh = await loadSlots(selectedDate)
           // Drop the stale selection if that slot is now full or gone.
-          if (fresh && !fresh.some((s) => s.id === selectedSlotId && s.available)) {
+          if (fresh && !fresh.some((s) => s.id === selectedSlotId && canFitParty(s, partySize))) {
             setSelectedSlotId(null)
           }
         } else if (res.status === 429) {
@@ -158,7 +162,7 @@ export default function Reservation() {
   const partySize = parseInt(form.party_size, 10)
   const displaySlots: Slot[] = slots.map((s) => ({
     ...s,
-    available: s.available && s.max_capacity - s.booked >= partySize,
+    available: canFitParty(s, partySize),
   }))
 
   function handlePartySizeChange(value: string) {
@@ -334,6 +338,7 @@ export default function Reservation() {
                   name="party_size"
                   value={form.party_size}
                   onChange={(e) => handlePartySizeChange(e.target.value)}
+                  disabled={submitting}
                   className={fieldClass}
                 >
                   {Array.from({ length: 10 }, (_, i) => i + 1).map((n) => (

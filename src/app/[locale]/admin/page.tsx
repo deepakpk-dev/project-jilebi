@@ -58,11 +58,19 @@ export default async function AdminPage({
   }
 
   // Active future reservations per slot, so blocking shows what it would strand.
-  const { data: upcoming } = await getSupabaseAdmin()
+  const { data: upcoming, error: upcomingError } = await getSupabaseAdmin()
     .from('reservations')
     .select('time_slot_id')
     .gte('date', todayBerlin)
     .neq('status', 'cancelled')
+
+  if (upcomingError) {
+    return (
+      <main className="p-8 text-red-600">
+        {t('fetch_error', { message: upcomingError.message })}
+      </main>
+    )
+  }
 
   const upcomingCountBySlot: Record<string, number> = {}
   for (const r of upcoming ?? []) {
