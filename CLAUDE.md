@@ -83,7 +83,7 @@ Admin uses HMAC-signed httpOnly cookie sessions (not bearer tokens):
 ## Environment Variables
 
 Copy `.env.local.example` to `.env.local`. Required:
-- `NEXT_PUBLIC_SUPABASE_URL` / `NEXT_PUBLIC_SUPABASE_ANON_KEY` — public, embedded in client
+- `NEXT_PUBLIC_SUPABASE_URL` / `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` — public, embedded in SSR/browser clients (`NEXT_PUBLIC_SUPABASE_ANON_KEY` remains supported as a legacy fallback)
 - `SUPABASE_SERVICE_ROLE_KEY` — server-only, never expose to client
 - `RESEND_API_KEY` / `RESEND_FROM_EMAIL` — email sending
 - `ADMIN_PASSWORD` — admin dashboard login

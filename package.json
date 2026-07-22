@@ -15,7 +15,8 @@
   },
   "dependencies": {
     "@react-email/render": "^2.0.8",
-    "@supabase/supabase-js": "^2.101.1",
+    "@supabase/ssr": "^0.12.3",
+    "@supabase/supabase-js": "^2.110.8",
     "date-fns": "^4.1.0",
     "next": "^16.2.4",
     "next-intl": "^4.9.1",

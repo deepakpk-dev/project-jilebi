@@ -245,6 +245,7 @@ Fill in:
 | Variable | Purpose |
 | --- | --- |
 | `NEXT_PUBLIC_SUPABASE_URL` | Public Supabase project URL |
+| `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | Publishable key for SSR/browser clients |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Public anon key constrained by RLS |
 | `SUPABASE_SERVICE_ROLE_KEY` | Server-only key for trusted API routes |
 | `RESEND_API_KEY` | Resend API key for transactional email |
