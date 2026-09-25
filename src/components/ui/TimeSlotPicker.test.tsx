@@ -26,4 +26,28 @@ describe('TimeSlotPicker', () => {
     fireEvent.click(screen.getByText('20:00 – 22:00'))
     expect(onSelect).not.toHaveBeenCalled()
   })
+
+  it('disables a slot that cannot fit the selected party', () => {
+    const nearlyFullSlot = [
+      {
+        id: '3',
+        start_time: '19:00',
+        end_time: '21:00',
+        max_capacity: 20,
+        booked: 18,
+        available: true,
+      },
+    ]
+
+    render(
+      <TimeSlotPicker
+        slots={nearlyFullSlot}
+        selected={null}
+        partySize={3}
+        onSelect={jest.fn()}
+      />
+    )
+
+    expect(screen.getByRole('button', { name: '19:00 – 21:00' })).toBeDisabled()
+  })
 })
