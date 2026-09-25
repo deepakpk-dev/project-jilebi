@@ -3,8 +3,15 @@
  */
 import { POST } from './route'
 import { NextRequest } from 'next/server'
+import { sendConfirmationEmail } from '@/lib/resend'
 
 const mockFrom = jest.fn()
+const mockAfterCallbacks: Array<() => void | Promise<void>> = []
+
+jest.mock('next/server', () => ({
+  ...jest.requireActual('next/server'),
+  after: (callback: () => void | Promise<void>) => mockAfterCallbacks.push(callback),
+}))
 
 jest.mock('@/lib/supabase', () => ({
   getSupabaseAdmin: () => ({ from: mockFrom }),
@@ -39,6 +46,8 @@ describe('POST /api/reservations', () => {
 
   beforeEach(() => {
     mockFrom.mockReset()
+    mockAfterCallbacks.length = 0
+    ;(sendConfirmationEmail as jest.Mock).mockReset().mockResolvedValue(false)
   })
 
   it('returns 400 when required fields are missing', async () => {
@@ -71,6 +80,44 @@ describe('POST /api/reservations', () => {
     expect(res.status).toBe(201)
     const body = await res.json()
     expect(body.reservation.id).toBe('res-uuid-1')
+  })
+
+  it('returns the reservation before confirmation email delivery finishes', async () => {
+    const mockData = [{ ...validBody, id: 'res-uuid-1', status: 'pending', created_at: new Date().toISOString(), time_slots: { start_time: '18:00:00', end_time: '20:00:00' } }]
+    mockFrom.mockReturnValueOnce({
+      select: () => ({
+        eq: () => ({
+          single: () => Promise.resolve({ data: { id: validBody.time_slot_id, day_of_week: 3, is_blocked: false }, error: null }),
+        }),
+      }),
+    })
+    mockFrom.mockReturnValueOnce({
+      insert: () => ({ select: () => Promise.resolve({ data: mockData, error: null }) }),
+    })
+
+    let finishEmail!: (delivered: boolean) => void
+    ;(sendConfirmationEmail as jest.Mock).mockReturnValueOnce(
+      new Promise<boolean>((resolve) => {
+        finishEmail = resolve
+      })
+    )
+
+    const req = new NextRequest('http://localhost/api/reservations', {
+      method: 'POST',
+      body: JSON.stringify(validBody),
+    })
+    const outcomePromise = Promise.race([
+      POST(req).then(() => 'response'),
+      new Promise<'timeout'>((resolve) => setTimeout(() => resolve('timeout'), 100)),
+    ])
+
+    await jest.advanceTimersByTimeAsync(100)
+    const outcome = await outcomePromise
+    finishEmail(false)
+    await mockAfterCallbacks[0]()
+
+    expect(outcome).toBe('response')
+    expect(sendConfirmationEmail).toHaveBeenCalledWith(mockData[0])
   })
 
   it('returns 409 when slot capacity is exceeded', async () => {

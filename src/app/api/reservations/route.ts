@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { after, NextRequest, NextResponse } from 'next/server'
 import { getSupabaseAdmin } from '@/lib/supabase'
 import { sendConfirmationEmail } from '@/lib/resend'
 import { rateLimit } from '@/lib/rate-limit'
@@ -134,26 +134,24 @@ export async function POST(req: NextRequest) {
 
   const reservation = data[0]
 
-  // Await this in serverless runtimes; fire-and-forget work can be stopped
-  // after the response is sent.
-  try {
-    const delivered = await sendConfirmationEmail(reservation)
-    if (delivered) {
-      const emailSentAt = new Date().toISOString()
-      const { error: emailUpdateError } = await getSupabaseAdmin()
-        .from('reservations')
-        .update({ email_sent_at: emailSentAt })
-        .eq('id', reservation.id)
+  after(async () => {
+    try {
+      const delivered = await sendConfirmationEmail(reservation)
+      if (delivered) {
+        const emailSentAt = new Date().toISOString()
+        const { error: emailUpdateError } = await getSupabaseAdmin()
+          .from('reservations')
+          .update({ email_sent_at: emailSentAt })
+          .eq('id', reservation.id)
 
-      if (emailUpdateError) {
-        console.error('[reservations] email_sent_at update failed:', emailUpdateError)
-      } else {
-        reservation.email_sent_at = emailSentAt
+        if (emailUpdateError) {
+          console.error('[reservations] email_sent_at update failed:', emailUpdateError)
+        }
       }
+    } catch (err) {
+      console.error('[reservations] confirmation email flow failed:', err)
     }
-  } catch (err) {
-    console.error('[reservations] confirmation email flow failed:', err)
-  }
+  })
 
   return NextResponse.json({ reservation }, { status: 201 })
 }

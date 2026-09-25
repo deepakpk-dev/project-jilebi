@@ -110,6 +110,7 @@
 }
 .rdp-root .rdp-selected .rdp-day_button {
   background-color: var(--color-gold);
+  border: 2px solid var(--color-gold);
   color: var(--color-ivory);
 }
 .rdp-root .rdp-today:not(.rdp-selected) .rdp-day_button {
