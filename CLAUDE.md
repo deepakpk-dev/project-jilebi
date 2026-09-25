@@ -11,7 +11,7 @@ Bilingual (DE/EN) restaurant website with real-time table reservations. Next.js 
 | `npm run dev` | Dev server at http://localhost:3000 |
 | `npm run build` | Production build (must pass before pushing) |
 | `npm run lint` | ESLint with next/core-web-vitals |
-| `npm test` | Jest — 16 tests across 6 suites |
+| `npm test` | Jest — 26 tests across 6 suites |
 | `npm run test:watch` | Jest watch mode |
 
 Always run `npm run lint`, `npm test`, and `npm run build` before committing.
@@ -69,7 +69,7 @@ Admin uses HMAC-signed httpOnly cookie sessions (not bearer tokens):
 - Admin endpoints check `isAdminAuthorized(req)` via cookie
 - `POST /api/reservations` is rate-limited (5/min/IP via `src/lib/rate-limit.ts`)
 - Capacity errors from the Postgres trigger return 409 Conflict
-- Confirmation emails are fire-and-forget: `sendConfirmationEmail(reservation).catch(console.error)`
+- The reservation POST awaits `sendConfirmationEmail` (a "request received" email) and records `email_sent_at` on delivery; email failure never fails the reservation. When an admin confirms a reservation, `sendReservationConfirmedEmail` is sent from the server action (also non-fatal on failure)
 
 ## Testing
 
@@ -78,6 +78,7 @@ Admin uses HMAC-signed httpOnly cookie sessions (not bearer tokens):
 - Mock Resend and rate-limit modules to isolate tests
 - API route tests use `@jest-environment node`; component tests use jsdom
 - Test files live next to source: `route.test.ts`, `Component.test.tsx`
+- E2E (`npm run test:e2e`, Playwright): `e2e/reservation.spec.ts` mocks `/api/*` at the browser layer (desktop + mobile projects); `e2e/journeys.spec.ts` drives full-stack guest + admin journeys through the real routes/server actions against `e2e/support/mock-supabase.mjs` (a PostgREST + Resend stand-in) on the single-instance `journeys` project. Playwright starts both the mock and `next dev` via its `webServer` array — point the app at the mock with `NEXT_PUBLIC_SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, and `RESEND_BASE_URL`.
 
 ## Environment Variables
 

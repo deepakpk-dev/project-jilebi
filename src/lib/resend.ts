@@ -42,8 +42,8 @@ export async function sendConfirmationEmail(reservation: Reservation): Promise<b
 
   const isDE = reservation.language !== 'en'
   const subject = isDE
-    ? 'Ihre Reservierung bei Jilebi — Bestätigung'
-    : 'Your reservation at Jilebi — Confirmation'
+    ? 'Ihre Reservierungsanfrage bei Jilebi'
+    : 'Your reservation request at Jilebi'
 
   const safeName = escapeHtml(reservation.name)
   const safeDate = escapeHtml(formatDate(reservation.date, isDE ? 'de' : 'en'))
@@ -52,24 +52,65 @@ export async function sendConfirmationEmail(reservation: Reservation): Promise<b
 
   const html = isDE
     ? `<p>Liebe(r) ${safeName},</p>
-       <p>vielen Dank für Ihre Reservierung bei <strong>Jilebi</strong>.</p>
+       <p>wir haben Ihre Reservierungsanfrage erhalten. Sie erhalten eine weitere E-Mail, sobald wir Ihre Reservierung bestätigt haben.</p>
        <p><strong>Datum:</strong> ${safeDate}<br>
        <strong>Uhrzeit:</strong> ${safeStart} – ${safeEnd}<br>
        <strong>Personen:</strong> ${reservation.party_size}</p>
-       <p>Wir freuen uns auf Ihren Besuch!</p>
        <p>Ihr Jilebi-Team<br>Nürtingen</p>`
     : `<p>Dear ${safeName},</p>
-       <p>Thank you for reserving a table at <strong>Jilebi</strong>.</p>
+       <p>we have received your reservation request. You will get another email as soon as we have confirmed your reservation.</p>
        <p><strong>Date:</strong> ${safeDate}<br>
        <strong>Time:</strong> ${safeStart} – ${safeEnd}<br>
        <strong>Guests:</strong> ${reservation.party_size}</p>
-       <p>We look forward to welcoming you!</p>
        <p>The Jilebi Team<br>Nürtingen</p>`
 
   const result = await getResend().emails.send({ from: FROM, to: reservation.email, subject, html })
   if (result.error) {
     console.error(
-      `[resend] confirmation send failed for reservation ${reservation.id}:`,
+      `[resend] request-received send failed for reservation ${reservation.id}:`,
+      result.error
+    )
+    return false
+  }
+  return true
+}
+
+export async function sendReservationConfirmedEmail(reservation: Reservation): Promise<boolean> {
+  if (!reservation.time_slots?.start_time || !reservation.time_slots?.end_time) {
+    console.error(
+      `[resend] skipping confirmed email for reservation ${reservation.id}: missing time_slots join`
+    )
+    return false
+  }
+
+  const isDE = reservation.language !== 'en'
+  const subject = isDE
+    ? 'Ihre Reservierung bei Jilebi — Bestätigt'
+    : 'Your reservation at Jilebi — Confirmed'
+
+  const safeName = escapeHtml(reservation.name)
+  const safeDate = escapeHtml(formatDate(reservation.date, isDE ? 'de' : 'en'))
+  const safeStart = escapeHtml(reservation.time_slots.start_time)
+  const safeEnd = escapeHtml(reservation.time_slots.end_time)
+
+  const html = isDE
+    ? `<p>Liebe(r) ${safeName},</p>
+       <p>Ihre Reservierung ist bestätigt. Wir freuen uns auf Ihren Besuch!</p>
+       <p><strong>Datum:</strong> ${safeDate}<br>
+       <strong>Uhrzeit:</strong> ${safeStart} – ${safeEnd}<br>
+       <strong>Personen:</strong> ${reservation.party_size}</p>
+       <p>Ihr Jilebi-Team<br>Nürtingen</p>`
+    : `<p>Dear ${safeName},</p>
+       <p>Your reservation is confirmed. We look forward to welcoming you!</p>
+       <p><strong>Date:</strong> ${safeDate}<br>
+       <strong>Time:</strong> ${safeStart} – ${safeEnd}<br>
+       <strong>Guests:</strong> ${reservation.party_size}</p>
+       <p>The Jilebi Team<br>Nürtingen</p>`
+
+  const result = await getResend().emails.send({ from: FROM, to: reservation.email, subject, html })
+  if (result.error) {
+    console.error(
+      `[resend] confirmed send failed for reservation ${reservation.id}:`,
       result.error
     )
     return false

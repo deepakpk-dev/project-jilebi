@@ -243,7 +243,7 @@ describe('Reservation', () => {
     fireEvent.change(screen.getByLabelText('form.phone_label'), { target: { value: '1234' } })
     fireEvent.click(screen.getByRole('button', { name: 'form.submit' }))
 
-    expect(await screen.findByText('slot_conflict')).toBeInTheDocument()
+    expect(await screen.findByText('error_slot_full')).toBeInTheDocument()
     expect(screen.getByLabelText('form.party_size_label')).toBeInTheDocument()
     expect(await screen.findByText('no_slots')).toBeInTheDocument()
     expect(global.fetch).toHaveBeenCalledTimes(3)

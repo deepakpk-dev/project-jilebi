@@ -186,8 +186,12 @@ export default function Reservation() {
           setLoadingSlots(true)
           focusTableOnReturnRef.current = true
           setStep('table')
-          setError(t('slot_conflict'))
+          setError(t('error_slot_full'))
           setAvailabilityRefresh((current) => current + 1)
+          return
+        }
+        if (res.status === 429) {
+          setError(t('error_rate_limited'))
           return
         }
         throw new Error()
