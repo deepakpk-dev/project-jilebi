@@ -195,12 +195,31 @@ test.describe('Mobile layout', () => {
   test('narrow screens do not scroll horizontally', async ({ page }) => {
     await page.goto('/de')
 
-    const documentWidth = await page.evaluate(() => ({
-      client: document.documentElement.clientWidth,
-      scroll: document.documentElement.scrollWidth,
-    }))
+    const layout = await page.evaluate(() => {
+      const clientWidth = document.documentElement.clientWidth
+      const overflowingElements = Array.from(document.querySelectorAll<HTMLElement>('body *'))
+        .filter((element) => !element.classList.contains('sr-only'))
+        .map((element) => {
+          const rect = element.getBoundingClientRect()
+          return {
+            tag: element.tagName.toLowerCase(),
+            className: element.className.toString(),
+            left: Math.round(rect.left * 100) / 100,
+            right: Math.round(rect.right * 100) / 100,
+            text: element.textContent?.trim().slice(0, 80) ?? '',
+          }
+        })
+        .filter(({ left, right }) => left < -0.5 || right > clientWidth + 0.5)
 
-    expect(documentWidth.scroll).toBe(documentWidth.client)
+      return {
+        clientWidth,
+        scrollWidth: document.documentElement.scrollWidth,
+        overflowingElements,
+      }
+    })
+
+    expect(layout.overflowingElements).toEqual([])
+    expect(layout.scrollWidth).toBe(layout.clientWidth)
   })
 
   test('narrow calendar month controls remain easy to tap', async ({ page }) => {

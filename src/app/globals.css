@@ -58,7 +58,8 @@
     @apply text-xs tracking-widest uppercase text-gold;
   }
   .section-title {
-    @apply font-serif text-3xl md:text-4xl font-normal tracking-brand text-charcoal uppercase;
+    @apply font-serif text-3xl md:text-4xl font-normal text-charcoal uppercase;
+    letter-spacing: 0.18em;
   }
   .field-label {
     @apply block text-[10px] tracking-widest uppercase text-muted mb-2;
@@ -75,6 +76,12 @@
   /* A small spinner used by async buttons / loading states */
   .spinner {
     @apply inline-block h-3 w-3 animate-spin rounded-full border border-current border-t-transparent;
+  }
+}
+
+@media (min-width: 640px) {
+  .section-title {
+    letter-spacing: 0.25em;
   }
 }
 
