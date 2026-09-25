@@ -23,28 +23,10 @@ test.beforeEach(async ({ request }) => {
   await request.get(`${MOCK}/__mock/reset`)
 })
 
-async function pickFirstDay(page: Page) {
-  for (let month = 0; month < 2; month++) {
-    const enabled = page.locator('[role="gridcell"] button:not([disabled])')
-
-    for (let i = 0; i < (await enabled.count()); i++) {
-      await enabled.nth(i).click()
-      try {
-        await page
-          .getByRole('button', { name: /18:00\s*[–-]\s*20:00/ })
-          .waitFor({ state: 'visible', timeout: 2_000 })
-        return
-      } catch {
-        // Skip closed restaurant days even though the calendar date is selectable.
-      }
-    }
-
-    if (month === 0) {
-      await page.getByRole('button', { name: /next month/i }).click()
-    }
-  }
-
-  throw new Error('No reservable day found in the current or next month')
+async function waitForPreloadedAvailability(page: Page) {
+  await page
+    .getByRole('button', { name: /18:00\s*[–-]\s*20:00/ })
+    .waitFor({ state: 'visible' })
 }
 
 test('guest — booking, capacity-aware slots, 409, and language switch', async ({ page }) => {
@@ -70,8 +52,9 @@ test('guest — booking, capacity-aware slots, 409, and language switch', async 
 
   await test.step('J4: complete a booking against the empty 20:00 slot', async () => {
     await page.locator('#reservation').scrollIntoViewIfNeeded()
-    await pickFirstDay(page)
+    await waitForPreloadedAvailability(page)
     await page.getByRole('button', { name: /20:00\s*[–-]\s*22:00/ }).click()
+    await page.getByRole('button', { name: 'Weiter' }).click()
     await page.getByPlaceholder('Ihr Name').fill('Lena Fischer')
     await page.getByPlaceholder('E-Mail-Adresse').fill('lena@example.de')
     await page.getByPlaceholder('Telefonnummer').fill('+49 7022 555 0100')
@@ -83,7 +66,7 @@ test('guest — booking, capacity-aware slots, 409, and language switch', async 
 
   await test.step('J5: party of 6 disables the near-full (15/20) 18:00 slot', async () => {
     await page.getByRole('button', { name: 'Weitere Reservierung' }).click()
-    await pickFirstDay(page)
+    await waitForPreloadedAvailability(page)
     const slot18 = page.getByRole('button', { name: /18:00\s*[–-]\s*20:00/ })
     await expect(slot18).toBeEnabled() // remaining 5 >= party 2
     await page.locator('#res-party').selectOption('6')
@@ -93,6 +76,7 @@ test('guest — booking, capacity-aware slots, 409, and language switch', async 
   await test.step('J6: a server 409 shows the specific message and refreshes availability', async () => {
     await page.locator('#res-party').selectOption('2')
     await page.getByRole('button', { name: /20:00\s*[–-]\s*22:00/ }).click()
+    await page.getByRole('button', { name: 'Weiter' }).click()
     await page.getByPlaceholder('Ihr Name').fill('Tom Becker')
     await page.getByPlaceholder('E-Mail-Adresse').fill('tom@example.de')
     await page.getByPlaceholder('Telefonnummer').fill('+49 7022 555 0200')

@@ -38,14 +38,10 @@ async function expectLocatorWithinViewport(locator: import('@playwright/test').L
   expect(box!.y + box!.height).toBeLessThanOrEqual(720)
 }
 
-async function pickFirstAvailableDay(page: import('@playwright/test').Page) {
-  const enabledDays = page.locator('[role="gridcell"] button:not([disabled])')
-
-  if ((await enabledDays.count()) === 0) {
-    await page.getByRole('button', { name: /next month/i }).click()
-  }
-
-  await enabledDays.first().click()
+async function waitForPreloadedAvailability(page: import('@playwright/test').Page) {
+  await page
+    .getByRole('button', { name: /18:00\s*[–-]\s*20:00/ })
+    .waitFor({ state: 'visible' })
 }
 
 test.describe('Hero section', () => {
@@ -97,10 +93,11 @@ test.describe('Reservation flow', () => {
     const reservationHeading = page.getByRole('heading', { name: /Einen Tisch buchen/i })
     await reservationHeading.scrollIntoViewIfNeeded()
 
-    await pickFirstAvailableDay(page)
+    await waitForPreloadedAvailability(page)
 
     // Time slot "18:00 – 20:00" appears once availability mock resolves
     await page.getByRole('button', { name: /18:00\s*[–-]\s*20:00/ }).click()
+    await page.getByRole('button', { name: 'Weiter' }).click()
 
     await page.getByPlaceholder('Ihr Name').fill('Maria Müller')
     await page.getByPlaceholder('E-Mail-Adresse').fill('maria@example.de')
@@ -145,22 +142,25 @@ test.describe('Reservation flow', () => {
     })
 
     await page.goto('/de')
-    await pickFirstAvailableDay(page)
+    await waitForPreloadedAvailability(page)
     await page.locator('#res-party').selectOption('6')
     await page.getByRole('button', { name: /18:00\s*[–-]\s*20:00/ }).click()
+    await page.getByRole('button', { name: 'Weiter' }).click()
     await page.getByPlaceholder('Ihr Name').fill('Maria Müller')
     await page.getByPlaceholder('E-Mail-Adresse').fill('maria@example.de')
     await page.getByPlaceholder('Telefonnummer').fill('+49 7022 555 0123')
 
     const callsBefore = availabilityCalls
     await page.getByRole('button', { name: 'Jetzt reservieren' }).click()
-    await expect(page.locator('#res-party')).toBeDisabled()
+    const submitButton = page.locator('#reservation button[type="submit"]')
+    await expect(submitButton).toBeDisabled()
+    await expect(submitButton).toHaveAttribute('aria-busy', 'true')
     releaseConflict?.()
 
     await expect(page.getByText(/soeben ausgebucht/)).toBeVisible()
     await expect.poll(() => availabilityCalls).toBeGreaterThan(callsBefore)
-    await expect(page.getByRole('button', { name: /18:00\s*[–-]\s*20:00/ })).toBeDisabled()
-    await expect(page.getByRole('button', { name: 'Jetzt reservieren' })).toBeDisabled()
+    await expect(page.getByText(/Kein freier Tisch bietet Platz/)).toBeVisible()
+    await expect(page.getByRole('button', { name: 'Weiter' })).toBeDisabled()
   })
 
   test('fully-booked slots are visible but cannot be selected', async ({ page }) => {
@@ -179,7 +179,7 @@ test.describe('Reservation flow', () => {
     })
 
     await page.goto('/de')
-    await pickFirstAvailableDay(page)
+    await waitForPreloadedAvailability(page)
 
     const fullSlot = page.getByRole('button', { name: /20:00\s*[–-]\s*22:00/ })
     await expect(fullSlot).toBeDisabled()
