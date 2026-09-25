@@ -36,7 +36,10 @@ export default function Nav() {
     <nav className="sticky top-0 z-50 bg-ivory/95 backdrop-blur-sm border-b border-sand">
       <div className="max-w-7xl mx-auto px-6 md:px-16 h-16 flex items-center justify-between">
         {/* Wordmark */}
-        <Link href="/" className="font-serif text-lg tracking-brand uppercase text-charcoal">
+        <Link
+          href="/"
+          className="inline-flex min-h-11 items-center font-serif text-lg tracking-brand uppercase text-charcoal"
+        >
           Jilebi
         </Link>
 
@@ -67,7 +70,11 @@ export default function Nav() {
 
         {/* Mobile controls */}
         <div className="flex md:hidden items-center gap-4">
-          <Link href={pathname} locale={altLocale} className="text-xs tracking-widest uppercase text-gold">
+          <Link
+            href={pathname}
+            locale={altLocale}
+            className="inline-flex min-h-11 min-w-11 items-center justify-center text-xs tracking-widest uppercase text-gold"
+          >
             {t('lang')}
           </Link>
           <button
@@ -76,7 +83,7 @@ export default function Nav() {
             aria-label={mobileOpen ? t('close_menu') : t('open_menu')}
             aria-expanded={mobileOpen}
             aria-controls="mobile-nav-panel"
-            className="relative w-8 h-8 flex items-center justify-center text-charcoal"
+            className="relative flex h-11 w-11 items-center justify-center text-charcoal"
           >
             <span
               className={`absolute block w-5 h-px bg-charcoal transition-transform duration-200 ${
@@ -110,7 +117,7 @@ export default function Nav() {
               key={link.href}
               href={link.href}
               onClick={() => setMobileOpen(false)}
-              className="text-xs tracking-widest uppercase text-charcoal hover:text-gold transition-colors"
+              className="flex min-h-11 items-center text-xs tracking-widest uppercase text-charcoal hover:text-gold transition-colors"
             >
               {link.label}
             </a>

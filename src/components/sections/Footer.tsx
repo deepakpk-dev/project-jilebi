@@ -24,7 +24,7 @@ export default function Footer() {
               href="https://instagram.com"
               target="_blank"
               rel="noreferrer"
-              className="text-xs tracking-widest uppercase text-ivory/70 hover:text-gold transition-colors"
+              className="inline-flex min-h-11 items-center text-xs tracking-widest uppercase text-ivory/70 hover:text-gold transition-colors"
             >
               Instagram
             </a>
@@ -32,7 +32,7 @@ export default function Footer() {
               href="https://facebook.com"
               target="_blank"
               rel="noreferrer"
-              className="text-xs tracking-widest uppercase text-ivory/70 hover:text-gold transition-colors"
+              className="inline-flex min-h-11 items-center text-xs tracking-widest uppercase text-ivory/70 hover:text-gold transition-colors"
             >
               Facebook
             </a>
@@ -69,16 +69,16 @@ export default function Footer() {
             <br />
             Deutschland
           </address>
-          <div className="mt-5 space-y-1.5">
+          <div className="mt-5">
             <a
               href="tel:+4970229040300"
-              className="block text-sm text-ivory/85 hover:text-gold transition-colors"
+              className="flex min-h-11 items-center text-sm text-ivory/85 hover:text-gold transition-colors"
             >
               +49 7022 904 030
             </a>
             <a
               href="mailto:info@jilebi.de"
-              className="block text-sm text-ivory/85 hover:text-gold transition-colors"
+              className="flex min-h-11 items-center text-sm text-ivory/85 hover:text-gold transition-colors"
             >
               info@jilebi.de
             </a>
@@ -100,23 +100,23 @@ export default function Footer() {
       </div>
 
       {/* Bottom bar */}
-      <div className="max-w-7xl mx-auto mt-16 pt-6 border-t border-ivory/15 flex flex-col sm:flex-row justify-between items-center gap-4">
-        <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-5">
+      <div className="max-w-7xl mx-auto mt-16 flex flex-col items-start justify-between gap-4 border-t border-ivory/15 pt-6 sm:flex-row sm:items-center">
+        <div className="flex w-full flex-col items-start gap-2 sm:w-auto sm:flex-row sm:items-center sm:gap-5">
           <p className="text-xs text-ivory/60">{t('copyright')}</p>
-          <p className="text-[10px] tracking-widest uppercase text-gold/80">
+          <p className="max-w-[34ch] text-[10px] leading-relaxed tracking-widest uppercase text-gold/80 sm:max-w-none">
             {t('demo_notice')}
           </p>
         </div>
         <div className="flex gap-6">
           <Link
             href="/impressum"
-            className="text-xs text-ivory/70 hover:text-ivory transition-colors"
+            className="inline-flex min-h-11 items-center text-xs text-ivory/70 hover:text-ivory transition-colors"
           >
             {t('impressum')}
           </Link>
           <Link
             href="/datenschutz"
-            className="text-xs text-ivory/70 hover:text-ivory transition-colors"
+            className="inline-flex min-h-11 items-center text-xs text-ivory/70 hover:text-ivory transition-colors"
           >
             {t('datenschutz')}
           </Link>
