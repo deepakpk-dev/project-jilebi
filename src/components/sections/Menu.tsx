@@ -26,7 +26,7 @@ export default function Menu() {
         <div
           role="tablist"
           aria-label={t('title')}
-          className="flex flex-wrap gap-x-1 mt-10 mb-10 border-b border-sand"
+          className="mt-10 mb-10 grid grid-cols-2 border-b border-sand sm:flex sm:flex-wrap sm:gap-x-1"
         >
           {categories.map((cat) => {
             const isActive = activeCategory === cat
@@ -39,7 +39,7 @@ export default function Menu() {
                 aria-controls={`menu-panel-${cat}`}
                 id={`menu-tab-${cat}`}
                 onClick={() => setActiveCategory(cat)}
-                className={`relative px-5 py-3 text-xs tracking-widest uppercase transition-colors duration-200 ${
+                className={`relative min-h-11 px-3 py-3 text-xs tracking-widest uppercase transition-colors duration-200 sm:px-5 ${
                   isActive ? 'text-charcoal' : 'text-muted hover:text-charcoal'
                 }`}
               >

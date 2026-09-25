@@ -67,10 +67,10 @@
     @apply block w-12 h-px bg-gold my-5;
   }
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 bg-charcoal text-ivory px-6 py-3 text-xs tracking-widest uppercase font-sans hover:bg-gold focus-visible:bg-gold transition-colors duration-200;
+    @apply inline-flex min-h-11 items-center justify-center gap-2 bg-charcoal text-ivory px-6 py-3 text-xs tracking-widest uppercase font-sans hover:bg-gold focus-visible:bg-gold transition-colors duration-200;
   }
   .btn-outline {
-    @apply inline-flex items-center justify-center gap-2 border border-gold text-gold px-6 py-3 text-xs tracking-widest uppercase font-sans hover:bg-gold hover:text-ivory focus-visible:bg-gold focus-visible:text-ivory transition-colors duration-200;
+    @apply inline-flex min-h-11 items-center justify-center gap-2 border border-gold text-gold px-6 py-3 text-xs tracking-widest uppercase font-sans hover:bg-gold hover:text-ivory focus-visible:bg-gold focus-visible:text-ivory transition-colors duration-200;
   }
   /* A small spinner used by async buttons / loading states */
   .spinner {
@@ -79,11 +79,13 @@
 }
 
 /* react-day-picker v9 — brand overrides */
-.rdp-root {
+.rdp-root.rdp-root {
   --rdp-accent-color: var(--color-gold);
   --rdp-accent-background-color: color-mix(in srgb, var(--color-gold) 12%, transparent);
-  --rdp-day-height: 2.25rem;
-  --rdp-day-width: 2.25rem;
+  --rdp-day-height: 2.75rem;
+  --rdp-day-width: 2.75rem;
+  --rdp-day_button-height: 2.625rem;
+  --rdp-day_button-width: 2.625rem;
   --rdp-day_button-border-radius: 999px;
   --rdp-disabled-opacity: 0.3;
   --rdp-font-family: inherit;
@@ -91,6 +93,19 @@
   --rdp-weekday-font-size: 0.625rem;
   --rdp-weekday-letter-spacing: 0.2em;
   color: var(--color-charcoal);
+}
+@media (max-width: 359px) {
+  .rdp-root.rdp-root {
+    --rdp-day-height: 2.25rem;
+    --rdp-day-width: 2.25rem;
+    --rdp-day_button-height: 2.25rem;
+    --rdp-day_button-width: 2.25rem;
+  }
+}
+.rdp-root .rdp-button_previous,
+.rdp-root .rdp-button_next {
+  width: 2.75rem;
+  height: 2.75rem;
 }
 .rdp-root .rdp-month_caption {
   font-family: Georgia, Cambria, 'Times New Roman', serif;

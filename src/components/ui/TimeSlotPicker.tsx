@@ -27,7 +27,7 @@ export default function TimeSlotPicker({ slots, selected, partySize = 1, onSelec
             onClick={() => canFitParty && onSelect(slot.id)}
             disabled={!canFitParty}
             aria-pressed={selected === slot.id}
-            className={`px-5 py-3 text-xs tracking-widest uppercase border transition-colors ${
+            className={`min-h-11 px-5 py-3 text-xs tracking-widest uppercase border transition-colors ${
             !canFitParty
               ? 'border-sand text-sand cursor-not-allowed'
               : selected === slot.id

@@ -186,10 +186,115 @@ test.describe('Reservation flow', () => {
   })
 })
 
-test.describe('Mobile navigation', () => {
-  test('hamburger menu exposes section links and closes on navigate', async ({ page }, testInfo) => {
+test.describe('Mobile layout', () => {
+  test.beforeEach(async ({ page }, testInfo) => {
     test.skip(testInfo.project.name !== 'chromium-mobile', 'mobile-only')
+    await page.setViewportSize({ width: 320, height: 568 })
+  })
 
+  test('narrow screens do not scroll horizontally', async ({ page }) => {
+    await page.goto('/de')
+
+    const documentWidth = await page.evaluate(() => ({
+      client: document.documentElement.clientWidth,
+      scroll: document.documentElement.scrollWidth,
+    }))
+
+    expect(documentWidth.scroll).toBe(documentWidth.client)
+  })
+
+  test('narrow calendar month controls remain easy to tap', async ({ page }) => {
+    await page.goto('/de')
+
+    const nextMonthBox = await page.locator('.rdp-button_next').boundingBox()
+
+    expect(nextMonthBox).not.toBeNull()
+    expect(nextMonthBox!.height).toBeGreaterThanOrEqual(44)
+    expect(nextMonthBox!.width).toBeGreaterThanOrEqual(44)
+  })
+
+  test('reservation time slots provide 44px tap targets', async ({ page }) => {
+    await page.route('**/api/availability*', async (route) => {
+      await route.fulfill({
+        status: 200,
+        contentType: 'application/json',
+        body: JSON.stringify(MOCK_SLOTS),
+      })
+    })
+    await page.goto('/de')
+
+    const timeSlot = page.getByRole('button', { name: /18:00\s*[–-]\s*20:00/ })
+    await timeSlot.waitFor({ state: 'visible' })
+    const box = await timeSlot.boundingBox()
+
+    expect(box).not.toBeNull()
+    expect(box!.height).toBeGreaterThanOrEqual(44)
+  })
+
+  test('primary mobile controls provide 44px tap targets', async ({ page }) => {
+    await page.goto('/de')
+
+    const hamburger = page.locator('button[aria-controls="mobile-nav-panel"]')
+    const languageSwitch = page.getByRole('link', { name: 'EN', exact: true })
+    const heroCtas = page.locator('main').locator('.btn-primary, .btn-outline').first()
+    const menuTabs = page.getByRole('tab')
+
+    for (const target of [hamburger, languageSwitch, heroCtas, menuTabs.first()]) {
+      const box = await target.boundingBox()
+      expect(box).not.toBeNull()
+      expect(box!.height).toBeGreaterThanOrEqual(44)
+      expect(box!.width).toBeGreaterThanOrEqual(44)
+    }
+  })
+
+  test('menu categories form a balanced two-column grid', async ({ page }) => {
+    await page.goto('/de')
+
+    const tabBoxes = await page.getByRole('tab').evaluateAll((tabs) =>
+      tabs.map((tab) => {
+        const box = tab.getBoundingClientRect()
+        return { x: box.x, y: box.y, width: box.width }
+      }),
+    )
+
+    expect(tabBoxes).toHaveLength(4)
+    expect(tabBoxes[0].y).toBe(tabBoxes[1].y)
+    expect(tabBoxes[2].y).toBe(tabBoxes[3].y)
+    expect(tabBoxes[2].y).toBeGreaterThan(tabBoxes[0].y)
+    expect(tabBoxes[0].x).toBe(tabBoxes[2].x)
+    expect(tabBoxes[1].x).toBe(tabBoxes[3].x)
+    expect(new Set(tabBoxes.map((box) => box.width)).size).toBe(1)
+  })
+
+  test('mobile footer links provide 44px tap targets', async ({ page }) => {
+    await page.goto('/de')
+
+    const footerTargets = [
+      page.getByRole('link', { name: 'Instagram' }),
+      page.getByRole('link', { name: '+49 7022 904 030' }),
+      page.getByRole('link', { name: 'Impressum' }),
+    ]
+
+    for (const target of footerTargets) {
+      const box = await target.boundingBox()
+      expect(box).not.toBeNull()
+      expect(box!.height).toBeGreaterThanOrEqual(44)
+    }
+  })
+
+  test('mobile footer closing groups share a left edge', async ({ page }) => {
+    await page.goto('/de')
+
+    const closingGroups = page.locator('footer > div').last().locator(':scope > div')
+    const copyrightBox = await closingGroups.first().boundingBox()
+    const legalBox = await closingGroups.last().boundingBox()
+
+    expect(copyrightBox).not.toBeNull()
+    expect(legalBox).not.toBeNull()
+    expect(Math.abs(copyrightBox!.x - legalBox!.x)).toBeLessThanOrEqual(1)
+  })
+
+  test('hamburger menu exposes section links and closes on navigate', async ({ page }) => {
     await page.goto('/de')
 
     const hamburger = page.locator('button[aria-controls="mobile-nav-panel"]')
