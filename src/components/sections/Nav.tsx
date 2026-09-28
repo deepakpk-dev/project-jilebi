@@ -84,7 +84,7 @@ export default function Nav() {
             aria-label={mobileOpen ? t('close_menu') : t('open_menu')}
             aria-expanded={mobileOpen}
             aria-controls="mobile-nav-panel"
-            className="relative w-11 h-11 flex items-center justify-center text-charcoal"
+            className="relative flex h-11 w-11 items-center justify-center text-charcoal"
           >
             <span
               className={`absolute block w-5 h-px bg-charcoal transition-transform duration-200 ${
@@ -117,7 +117,7 @@ export default function Nav() {
               key={link.href}
               href={`/${locale}${link.href}`}
               onClick={() => setMobileOpen(false)}
-              className="text-xs tracking-widest uppercase text-charcoal hover:text-gold-ink transition-colors"
+              className="flex min-h-11 items-center text-xs tracking-widest uppercase text-charcoal hover:text-gold-ink transition-colors"
             >
               {link.label}
             </a>

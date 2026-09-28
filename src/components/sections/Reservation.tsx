@@ -243,7 +243,7 @@ export default function Reservation() {
           <h2 className="display-title">{t('title')}</h2>
           <p className="body-copy">{t('intro')}</p>
           <div className="reservation-note"><span aria-hidden="true">✳</span><p>{t('note')}</p></div>
-          <p className="reservation-help">{t('help')}<a href="tel:+4970229040300">+49 7022 904 030 ↗</a></p>
+          <p className="reservation-help">{t('help')}<a href="tel:+497022904030">+49 7022 904 030 ↗</a></p>
         </div>
         <div className="reservation-booking">
         <div className="booking-heading">
