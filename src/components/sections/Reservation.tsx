@@ -6,7 +6,6 @@ import { DayPicker } from 'react-day-picker'
 import { format, addDays, startOfToday } from 'date-fns'
 import { de, enGB } from 'date-fns/locale'
 import 'react-day-picker/style.css'
-import GoldenRule from '@/components/ui/GoldenRule'
 import TimeSlotPicker, { Slot } from '@/components/ui/TimeSlotPicker'
 
 type FormState = {
@@ -229,7 +228,7 @@ export default function Reservation() {
   }
 
   const fieldClass =
-    'w-full min-h-11 bg-transparent border-b border-sand py-2 text-base text-charcoal placeholder:text-muted/70 focus:border-gold focus:outline-none transition-colors'
+    'booking-field'
   const selectedSlot = slots.find((slot) => slot.id === selectedSlotId)
   const partySize = parseInt(form.party_size, 10)
   const hasFittingSlot = slots.some(
@@ -237,19 +236,31 @@ export default function Reservation() {
   )
 
   return (
-    <section id="reservation" className="section-padding bg-ivory">
-      <div className="max-w-5xl mx-auto">
-        <p className="section-eyebrow mb-5">{t('label')}</p>
-        <h2 className="section-title mb-3">{t('title')}</h2>
-        <GoldenRule />
+    <section id="reservation" className="reservation-section section-padding">
+      <div className="page-width reservation-layout">
+        <div className="reservation-intro">
+          <p className="section-eyebrow">04 / {t('label')}</p>
+          <h2 className="display-title">{t('title')}</h2>
+          <p className="body-copy">{t('intro')}</p>
+          <div className="reservation-note"><span aria-hidden="true">✳</span><p>{t('note')}</p></div>
+          <p className="reservation-help">{t('help')}<a href="tel:+497022904030">+49 7022 904 030 ↗</a></p>
+        </div>
+        <div className="reservation-booking">
+        <div className="booking-heading">
+          <div>
+            <p className="booking-kicker">Jilebi · Nürtingen</p>
+            <h3>{confirmed ? t('card_received') : t('card_title')}</h3>
+          </div>
+          <span className="booking-monogram" aria-hidden="true">J.</span>
+        </div>
 
         {confirmed ? (
           <div
             role="status"
             aria-live="polite"
-            className="mt-12 max-w-xl animate-fade-in"
+            className="booking-success animate-fade-in"
           >
-            <p className="section-eyebrow mb-5">{t('label')}</p>
+            <span className="booking-success-mark" aria-hidden="true">✓</span>
             <h3
               ref={successHeadingRef}
               tabIndex={-1}
@@ -261,7 +272,7 @@ export default function Reservation() {
               {t('success_body')}
             </p>
 
-            <dl className="grid grid-cols-[auto_1fr] gap-x-8 gap-y-3 border-t border-sand pt-6 text-sm">
+            <dl className="booking-confirmation">
               <dt className="text-[10px] tracking-widest uppercase text-muted self-center">
                 {t('date_label')}
               </dt>
@@ -295,34 +306,36 @@ export default function Reservation() {
         ) : (
           <form
             onSubmit={handleSubmit}
-            className="mt-10"
+            className="booking-form"
             noValidate
           >
             <ol
               aria-label={t('step_progress')}
-              className="mb-10 flex max-w-xl items-center text-[10px] uppercase tracking-widest"
+              className="booking-progress"
             >
-              <li className="flex items-center gap-3 text-charcoal">
-                <span className="flex h-7 w-7 items-center justify-center rounded-full bg-charcoal text-ivory">
-                  1
+              <li aria-current={step === 'table' ? 'step' : undefined} className={step === 'details' ? 'is-complete' : ''}>
+                <span className="booking-step-number" aria-hidden="true">
+                  {step === 'details' ? '✓' : '01'}
                 </span>
                 <span>{t('step_table')}</span>
               </li>
-              <li aria-hidden="true" className="mx-4 h-px flex-1 bg-sand" />
-              <li className={`flex items-center gap-3 ${step === 'details' ? 'text-charcoal' : 'text-muted/60'}`}>
-                <span className={`flex h-7 w-7 items-center justify-center rounded-full border ${step === 'details' ? 'border-charcoal bg-charcoal text-ivory' : 'border-sand'}`}>
-                  2
+              <li aria-current={step === 'details' ? 'step' : undefined}>
+                <span className="booking-step-number" aria-hidden="true">
+                  02
                 </span>
                 <span>{t('step_details')}</span>
               </li>
             </ol>
 
             {step === 'table' ? (
-              <div className="grid grid-cols-1 gap-10 animate-fade-in lg:grid-cols-[20rem_1fr] lg:gap-20">
-                <div>
+              <>
+              <div className="booking-table-grid animate-fade-in">
+                <div className="booking-calendar-panel">
                   <p className="field-label">{t('date_label')}</p>
                   <DayPicker
+                    className="reservation-calendar"
                     mode="single"
+                    defaultMonth={selectedDate}
                     selected={selectedDate}
                     onSelect={handleDateSelect}
                     disabled={[
@@ -333,16 +346,16 @@ export default function Reservation() {
                     locale={dateLocale}
                     weekStartsOn={1}
                   />
-                  <p className="mt-3 text-xs text-muted">{t('closed_monday')}</p>
+                  <p className="booking-calendar-note"><span aria-hidden="true" />{t('closed_monday')}</p>
                 </div>
 
-                <div className="flex flex-col border-t border-sand pt-7 lg:border-t-0 lg:pt-0">
-                  <p className="section-eyebrow mb-7">{t('visit_label')}</p>
-
-                  <div className="max-w-xs">
+                <div className="booking-options">
+                  <div>
                     <label htmlFor="res-party" className="field-label">
                       {t('form.party_size_label')}
                     </label>
+                    <div className="booking-guest-control">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" aria-hidden="true"><circle cx="9" cy="7" r="3" /><path d="M3 20v-3a6 6 0 0 1 12 0v3M16 4a3 3 0 0 1 0 6m2 3a5 5 0 0 1 3 4v3" /></svg>
                     <select
                       ref={partySizeRef}
                       id="res-party"
@@ -352,7 +365,7 @@ export default function Reservation() {
                         setForm({ ...form, party_size: e.target.value })
                         setSelectedSlotId(null)
                       }}
-                      className={fieldClass}
+                      className="booking-guest-select"
                     >
                       {Array.from({ length: 10 }, (_, i) => i + 1).map((n) => (
                         <option key={n} value={n}>
@@ -360,28 +373,29 @@ export default function Reservation() {
                         </option>
                       ))}
                     </select>
+                    </div>
                   </div>
 
                   {selectedDate && (
-                    <div className="mt-9 min-h-40" aria-live="polite">
+                    <div className="booking-times" aria-live="polite">
                       <p className="field-label">{t('slot_label')}</p>
-                      <p className="mb-5 font-serif text-xl text-charcoal">
+                      <p className="booking-date-caption">
                         {format(selectedDate, fullDateFormat, { locale: dateLocale })}
                       </p>
 
                       {loadingSlots ? (
-                        <div role="status">
-                          <span className="sr-only">{t('loading_slots')}</span>
-                          <div aria-hidden="true" className="flex flex-wrap gap-3">
+                        <div role="status" className="booking-loading">
+                          <span>{t('loading_slots')}</span>
+                          <div aria-hidden="true" className="booking-slot-skeletons">
                             {[0, 1, 2].map((item) => (
-                              <span key={item} className="h-11 w-32 animate-pulse bg-sand/60" />
+                              <span key={item}><span /></span>
                             ))}
                           </div>
                         </div>
                       ) : slots.length === 0 ? (
-                        <p className="text-sm leading-relaxed text-muted">{t('no_slots')}</p>
+                        <p className="booking-empty">{t('no_slots')}</p>
                       ) : !hasFittingSlot ? (
-                        <p className="text-sm leading-relaxed text-muted">{t('no_slots_for_party')}</p>
+                        <p className="booking-empty">{t('no_slots_for_party')}</p>
                       ) : (
                         <TimeSlotPicker
                           slots={slots}
@@ -402,19 +416,27 @@ export default function Reservation() {
                     </p>
                   )}
 
-                  <button
+                </div>
+              </div>
+              <div className="booking-action-bar">
+                <div className="booking-summary" aria-live="polite">
+                  <p>{t('selected_table')}</p>
+                  <span>{selectedDate ? format(selectedDate, locale === 'en' ? 'd MMM' : 'd. MMM', { locale: dateLocale }) : t('date_label')} · {t('success_party', { count: partySize })}</span>
+                  <small>{selectedSlot ? `${selectedSlot.start_time.substring(0, 5)} – ${selectedSlot.end_time.substring(0, 5)}` : t('choose_time_hint')}</small>
+                </div>
+                <button
                     type="button"
                     onClick={() => setStep('details')}
                     disabled={!selectedSlotId}
-                    className="btn-primary mt-7 w-full min-h-12 disabled:cursor-not-allowed disabled:opacity-35 sm:w-auto sm:self-start"
+                    className="btn-primary booking-next"
                   >
-                    {t('continue')}
+                    {t('continue')}<span aria-hidden="true">↗</span>
                   </button>
-                </div>
               </div>
+              </>
             ) : (
-              <div className="max-w-3xl animate-fade-in">
-                <div className="mb-10 flex flex-col gap-5 border-y border-sand py-5 sm:flex-row sm:items-center sm:justify-between">
+              <div className="booking-details animate-fade-in">
+                <div className="booking-selected-table">
                   <div>
                     <p className="field-label">{t('selected_table')}</p>
                     <p className="font-serif text-lg leading-relaxed text-charcoal">
@@ -425,7 +447,7 @@ export default function Reservation() {
                       {t('success_party', { count: partySize })}
                     </p>
                   </div>
-                  <button type="button" onClick={returnToTable} className="self-start text-xs uppercase tracking-widest text-gold hover:text-charcoal sm:self-center">
+                  <button type="button" onClick={returnToTable} className="self-start text-xs uppercase tracking-widest text-gold-ink hover:text-charcoal sm:self-center">
                     {t('change')}
                   </button>
                 </div>
@@ -519,7 +541,7 @@ export default function Reservation() {
 
                 {error && <p role="alert" className="mt-6 text-sm text-chili">{error}</p>}
 
-                <div className="mt-9 flex flex-col-reverse gap-3 sm:flex-row sm:items-center">
+                <div className="booking-details-actions">
                   <button type="button" onClick={returnToTable} className="btn-outline min-h-12">
                     {t('back')}
                   </button>
@@ -538,6 +560,7 @@ export default function Reservation() {
             )}
           </form>
         )}
+        </div>
       </div>
     </section>
   )

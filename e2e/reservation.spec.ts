@@ -1,4 +1,6 @@
 import { test, expect } from '@playwright/test'
+import de from '../src/messages/de.json'
+import en from '../src/messages/en.json'
 
 /**
  * End-to-end reservation flow.
@@ -184,6 +186,61 @@ test.describe('Reservation flow', () => {
     const fullSlot = page.getByRole('button', { name: /20:00\s*[–-]\s*22:00/ })
     await expect(fullSlot).toBeDisabled()
   })
+
+  for (const [locale, messages] of [['de', de], ['en', en]] as const) {
+    test(`${locale}: validation, changing the table, retrying, and booking again`, async ({ page }) => {
+      const t = messages.reservation
+      let submissions = 0
+      await page.route('**/api/reservations', async (route) => {
+        submissions++
+        await route.fulfill({
+          status: submissions === 1 ? 429 : submissions === 2 ? 500 : 201,
+          contentType: 'application/json',
+          body: JSON.stringify(submissions < 3 ? { error: 'Test failure' } : { reservation: { status: 'pending' } }),
+        })
+      })
+      await page.goto(`/${locale}`)
+      await waitForPreloadedAvailability(page)
+      const next = page.getByRole('button', { name: t.continue, exact: false })
+      await expect(next).toBeDisabled()
+      await page.getByRole('button', { name: /18:00\s*[–-]\s*20:00/ }).click()
+      await next.click()
+      await expect(page.locator('#res-name')).toBeFocused()
+      await page.getByRole('button', { name: t.form.submit, exact: true }).click()
+      await expect(page.locator('#res-name')).toHaveAttribute('aria-invalid', 'true')
+      await expect(page.locator('#res-email')).toHaveAttribute('aria-invalid', 'true')
+      await expect(page.locator('#res-phone')).toHaveAttribute('aria-invalid', 'true')
+      expect(submissions).toBe(0)
+      await page.locator('#res-name').fill('Booking Test')
+      await page.locator('#res-email').fill('invalid-email')
+      await page.locator('#res-phone').fill('+49 7022 555 0123')
+      await page.getByRole('button', { name: t.form.submit, exact: true }).click()
+      await expect(page.locator('#res-email')).toBeFocused()
+      expect(submissions).toBe(0)
+      await page.locator('#res-email').fill('booking@example.com')
+      await page.getByRole('button', { name: t.back, exact: true }).click()
+      await expect(page.locator('#res-party')).toBeFocused()
+      await page.locator('#res-party').selectOption('3')
+      await expect(next).toBeDisabled()
+      await expect(page.getByRole('button', { name: /20:00\s*[–-]\s*22:00/ })).toBeDisabled()
+      await page.getByRole('button', { name: /18:00\s*[–-]\s*20:00/ }).click()
+      await next.click()
+      await expect(page.locator('#res-name')).toHaveValue('Booking Test')
+      await expect(page.locator('#res-email')).toHaveValue('booking@example.com')
+      await page.getByRole('button', { name: t.form.submit, exact: true }).click()
+      await expect(page.locator('#reservation').getByRole('alert')).toHaveText(t.error_rate_limited)
+      await page.getByRole('button', { name: t.form.submit, exact: true }).click()
+      await expect(page.locator('#reservation').getByRole('alert')).toHaveText(t.error)
+      await expect(page.locator('#res-email')).toHaveValue('booking@example.com')
+      await page.getByRole('button', { name: t.form.submit, exact: true }).click()
+      await expect(page.getByRole('heading', { name: t.success_title })).toBeFocused()
+      await expect(page.locator('.booking-confirmation')).toContainText('booking@example.com')
+      await page.getByRole('button', { name: t.success_book_another, exact: true }).click()
+      await waitForPreloadedAvailability(page)
+      await expect(page.locator('#res-party')).toHaveValue('2')
+      await expect(next).toBeDisabled()
+    })
+  }
 })
 
 test.describe('Mobile layout', () => {
@@ -286,8 +343,8 @@ test.describe('Mobile layout', () => {
     await page.goto('/de')
 
     const footerTargets = [
-      page.getByRole('link', { name: 'Instagram' }),
-      page.getByRole('link', { name: '+49 7022 904 030' }),
+      page.getByRole('link', { name: /Wegbeschreibung/ }),
+      page.getByRole('link', { name: '+49 7022 904 030', exact: true }),
       page.getByRole('link', { name: 'Impressum' }),
     ]
 
@@ -295,6 +352,16 @@ test.describe('Mobile layout', () => {
       const box = await target.boundingBox()
       expect(box).not.toBeNull()
       expect(box!.height).toBeGreaterThanOrEqual(44)
+    }
+  })
+
+  test('phone links dial the displayed restaurant number', async ({ page }) => {
+    await page.goto('/de')
+
+    const phoneLinks = page.locator('a[href^="tel:"]')
+    await expect(phoneLinks).toHaveCount(2)
+    for (const phoneLink of await phoneLinks.all()) {
+      await expect(phoneLink).toHaveAttribute('href', 'tel:+497022904030')
     }
   })
 

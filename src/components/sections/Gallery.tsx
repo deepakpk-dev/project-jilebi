@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from 'react'
 import { useTranslations, useLocale } from 'next-intl'
 import Image from 'next/image'
 import { galleryImages } from '@/data/gallery'
-import GoldenRule from '@/components/ui/GoldenRule'
 import Lightbox from '@/components/ui/Lightbox'
 
 export default function Gallery() {
@@ -23,17 +22,23 @@ export default function Gallery() {
   }, [lightboxIndex])
 
   return (
-    <section id="gallery" className="section-padding bg-ivory">
-      <div className="max-w-7xl mx-auto">
-        <p className="section-eyebrow mb-5">{t('label')}</p>
-        <h2 className="section-title mb-3">{t('title')}</h2>
-        <GoldenRule />
+    <section id="gallery" className="gallery-section section-padding">
+      <div className="page-width">
+        <div className="section-heading-row">
+          <div><p className="section-eyebrow">03 / {t('label')}</p><h2 className="display-title">{t('title')}<br /><em>{t('title_accent')}</em></h2></div>
+          <p className="body-copy">{t('intro')}</p>
+        </div>
 
-        <ul className="mt-12 columns-2 md:columns-3 gap-5">
+        <ul className="gallery-grid">
           {galleryImages.map((img, i) => {
             const alt = locale === 'en' ? img.alt.en : img.alt.de
+            const sizes = i === 0
+              ? '(min-width: 768px) 40vw, 100vw'
+              : i === galleryImages.length - 1
+                ? '(min-width: 768px) 62vw, 50vw'
+                : '(min-width: 768px) 31vw, 50vw'
             return (
-              <li key={img.src} className="break-inside-avoid mb-5">
+              <li key={img.src}>
                 <button
                   ref={(el) => {
                     buttonRefs.current[i] = el
@@ -41,14 +46,14 @@ export default function Gallery() {
                   type="button"
                   onClick={() => setLightboxIndex(i)}
                   aria-label={alt}
-                  className="group block w-full overflow-hidden bg-sand"
+                  className="gallery-tile group"
                 >
-                  <span className="relative aspect-square block">
+                  <span className="gallery-tile-image">
                     <Image
                       src={`/gallery/${img.src}`}
                       alt={alt}
                       fill
-                      sizes="(min-width: 768px) 33vw, 50vw"
+                      sizes={sizes}
                       className="object-cover transition-transform duration-[600ms] group-hover:scale-[1.04] group-focus-visible:scale-[1.04]"
                       style={{ transitionTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)' }}
                     />
@@ -57,6 +62,7 @@ export default function Gallery() {
                       className="absolute inset-0 bg-charcoal/0 group-hover:bg-charcoal/15 group-focus-visible:bg-charcoal/15 transition-colors duration-300"
                     />
                   </span>
+                  <span className="gallery-caption"><span>{alt}</span><span aria-hidden="true">↗</span></span>
                 </button>
               </li>
             )

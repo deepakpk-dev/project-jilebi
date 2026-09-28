@@ -33,22 +33,19 @@ export default function Nav() {
   }, [mobileOpen])
 
   return (
-    <nav className="sticky top-0 z-50 bg-ivory/95 backdrop-blur-sm border-b border-sand">
-      <div className="max-w-7xl mx-auto px-6 md:px-16 h-16 flex items-center justify-between">
+    <nav className="site-nav">
+      <div className="nav-inner">
         {/* Wordmark */}
-        <Link
-          href="/"
-          className="inline-flex min-h-11 items-center font-serif text-lg tracking-brand uppercase text-charcoal"
-        >
-          Jilebi
+        <Link href="/" className="nav-wordmark">
+          Jilebi<span aria-hidden="true">.</span>
         </Link>
 
         {/* Desktop nav */}
-        <div className="hidden md:flex items-center gap-8">
+        <div className="hidden lg:flex items-center gap-6">
           {navLinks.map((link) => (
             <a
               key={link.href}
-              href={link.href}
+              href={`/${locale}${link.href}`}
               className="text-xs tracking-widest uppercase text-muted hover:text-charcoal transition-colors"
             >
               {link.label}
@@ -57,24 +54,28 @@ export default function Nav() {
           <Link
             href={pathname}
             locale={altLocale}
-            className="text-xs tracking-widest uppercase text-gold hover:text-charcoal transition-colors"
+            className="text-xs tracking-widest uppercase text-gold-ink hover:text-charcoal transition-colors"
           >
             {t('lang')}
           </Link>
         </div>
 
         {/* Desktop CTA */}
-        <a href="#reservation" className="btn-primary text-xs hidden md:inline-block">
-          {t('reserve')}
+        <a href={`/${locale}#reservation`} className="btn-primary text-xs hidden lg:inline-flex">
+          {t('reserve')}<span aria-hidden="true">↗</span>
         </a>
 
         {/* Mobile controls */}
-        <div className="flex md:hidden items-center gap-4">
-          <Link
-            href={pathname}
-            locale={altLocale}
-            className="inline-flex min-h-11 min-w-11 items-center justify-center text-xs tracking-widest uppercase text-gold"
+        <div className="flex lg:hidden items-center gap-1">
+          <a
+            href={`/${locale}#reservation`}
+            aria-label={t('reserve')}
+            onClick={() => setMobileOpen(false)}
+            className="btn-primary px-3 tracking-[0.1em]"
           >
+            {t('reserve_short')}
+          </a>
+          <Link href={pathname} locale={altLocale} className="inline-flex min-h-11 min-w-11 items-center justify-center text-xs tracking-widest uppercase text-gold-ink">
             {t('lang')}
           </Link>
           <button
@@ -107,23 +108,22 @@ export default function Nav() {
       {/* Mobile panel */}
       <div
         id="mobile-nav-panel"
-        className={`md:hidden overflow-hidden border-t border-sand bg-ivory transition-[max-height] duration-300 ease-out ${
-          mobileOpen ? 'max-h-96' : 'max-h-0'
-        }`}
+        hidden={!mobileOpen}
+        className="mobile-nav-panel lg:hidden"
       >
         <div className="px-6 py-6 flex flex-col gap-5">
           {navLinks.map((link) => (
             <a
               key={link.href}
-              href={link.href}
+              href={`/${locale}${link.href}`}
               onClick={() => setMobileOpen(false)}
-              className="flex min-h-11 items-center text-xs tracking-widest uppercase text-charcoal hover:text-gold transition-colors"
+              className="flex min-h-11 items-center text-xs tracking-widest uppercase text-charcoal hover:text-gold-ink transition-colors"
             >
               {link.label}
             </a>
           ))}
           <a
-            href="#reservation"
+            href={`/${locale}#reservation`}
             onClick={() => setMobileOpen(false)}
             className="btn-primary text-xs self-start"
           >

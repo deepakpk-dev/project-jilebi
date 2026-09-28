@@ -16,7 +16,7 @@ type Props = {
 
 export default function TimeSlotPicker({ slots, selected, partySize = 1, onSelect }: Props) {
   return (
-    <div className="flex flex-wrap gap-3">
+    <div className="booking-time-slots">
       {slots.map((slot) => {
         const canFitParty = slot.available && slot.max_capacity - slot.booked >= partySize
 
@@ -27,15 +27,10 @@ export default function TimeSlotPicker({ slots, selected, partySize = 1, onSelec
             onClick={() => canFitParty && onSelect(slot.id)}
             disabled={!canFitParty}
             aria-pressed={selected === slot.id}
-            className={`min-h-11 px-5 py-3 text-xs tracking-widest uppercase border transition-colors ${
-            !canFitParty
-              ? 'border-sand text-sand cursor-not-allowed'
-              : selected === slot.id
-              ? 'border-gold bg-gold text-ivory'
-              : 'border-charcoal text-charcoal hover:border-gold hover:text-gold'
-          }`}
+            className="booking-time-slot"
           >
-            {slot.start_time.substring(0, 5)} – {slot.end_time.substring(0, 5)}
+            <span>{slot.start_time.substring(0, 5)} – {slot.end_time.substring(0, 5)}</span>
+            <span className="booking-slot-check" aria-hidden="true">{selected === slot.id ? '✓' : ''}</span>
           </button>
         )
       })}

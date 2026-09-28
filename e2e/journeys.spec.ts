@@ -32,7 +32,8 @@ async function waitForPreloadedAvailability(page: Page) {
 test('guest — booking, capacity-aware slots, 409, and language switch', async ({ page }) => {
   await test.step('J1: land on the German homepage', async () => {
     await page.goto('/de', { waitUntil: 'networkidle' })
-    await expect(page.getByRole('heading', { name: /Willkommen bei/i })).toBeVisible()
+    await expect(page.getByRole('heading', { name: 'Jilebi', level: 1, exact: true })).toBeVisible()
+    await expect(page.locator('html')).toHaveAttribute('lang', 'de')
   })
 
   await test.step('J2: browse the menu and switch category tabs', async () => {
@@ -89,7 +90,9 @@ test('guest — booking, capacity-aware slots, 409, and language switch', async 
     await page.goto('/de', { waitUntil: 'networkidle' })
     await page.getByRole('link', { name: 'EN', exact: true }).first().click()
     await page.waitForURL('**/en')
-    await expect(page.getByRole('heading', { name: /Welcome to/i })).toBeVisible()
+    await expect(page.getByRole('heading', { name: 'Jilebi', level: 1, exact: true })).toBeVisible()
+    await expect(page.locator('html')).toHaveAttribute('lang', 'en')
+    await expect(page.getByRole('link', { name: 'View Menu', exact: true })).toBeVisible()
   })
 })
 

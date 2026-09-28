@@ -1,32 +1,22 @@
 import Image from 'next/image'
 import { useTranslations } from 'next-intl'
-import GoldenRule from '@/components/ui/GoldenRule'
 
 export default function About() {
   const t = useTranslations('about')
-
   return (
-    <section id="about" className="section-padding bg-ivory">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-        {/* Atmosphere image */}
-        <div className="relative h-80 lg:h-[460px] bg-sand overflow-hidden order-2 lg:order-1">
-          <Image
-            src="/about.jpg"
-            alt={t('image_alt')}
-            fill
-            sizes="(min-width: 1024px) 50vw, 100vw"
-            className="object-cover"
-          />
+    <section id="about" className="story-section section-padding">
+      <div className="story-layout page-width">
+        <div className="story-image">
+          <Image src="/about.jpg" alt={t('image_alt')} fill sizes="(min-width: 1024px) 48vw, 100vw" className="object-cover" />
+          <span className="photo-caption">{t('caption')}</span>
         </div>
-
-        {/* Text */}
-        <div className="order-1 lg:order-2">
-          <p className="section-eyebrow mb-5">{t('label')}</p>
-          <h2 className="section-title mb-3">{t('title')}</h2>
-          <GoldenRule />
-          <p className="text-charcoal/75 text-base leading-[1.7] mt-5 max-w-prose">
-            {t('body')}
-          </p>
+        <div className="story-copy">
+          <p className="section-eyebrow">01 / {t('label')}</p>
+          <h2 className="display-title">{t('title')}<br /><em>{t('title_accent')}</em></h2>
+          <p className="story-intro">{t('intro')}</p>
+          <p className="body-copy">{t('body')}</p>
+          <a href="#menu" className="text-link">{t('cta')}<span aria-hidden="true">↗</span></a>
+          <div className="story-signature"><span aria-hidden="true">J.</span><p>{t('signature')}</p></div>
         </div>
       </div>
     </section>

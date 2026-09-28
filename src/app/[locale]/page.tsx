@@ -56,8 +56,8 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       <Hero />
       <About />
       <Menu />
-      <Reservation />
       <Gallery />
+      <Reservation />
       <Footer />
       <script
         type="application/ld+json"

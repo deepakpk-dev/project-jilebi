@@ -10,6 +10,10 @@ jest.mock('next-intl', () => ({
 }))
 
 describe('Reservation', () => {
+  afterEach(() => {
+    jest.useRealTimers()
+  })
+
   beforeEach(() => {
     global.fetch = jest.fn().mockResolvedValue({
       ok: true,
@@ -35,6 +39,15 @@ describe('Reservation', () => {
         expect.objectContaining({ signal: expect.any(AbortSignal) })
       )
     })
+  })
+
+  it('shows the selected booking date when tomorrow is in the next month', async () => {
+    jest.useFakeTimers()
+    jest.setSystemTime(new Date(2026, 8, 30, 12))
+    render(<Reservation />)
+    await screen.findByText('no_slots')
+
+    expect(screen.getByRole('button', { name: /Thursday, 1 October 2026, selected/ })).toBeVisible()
   })
 
   it('shows the availability skeleton on the initial render', async () => {
