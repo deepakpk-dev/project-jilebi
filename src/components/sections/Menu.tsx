@@ -1,105 +1,61 @@
 'use client'
 
-import { useState } from 'react'
+import { useRef, useState } from 'react'
+import Image from 'next/image'
 import { useTranslations, useLocale } from 'next-intl'
 import { menu, MenuCategory } from '@/data/menu'
-import GoldenRule from '@/components/ui/GoldenRule'
 import DietaryGlyph from '@/components/ui/DietaryGlyph'
+
+const categories: MenuCategory[] = ['starters', 'mains', 'desserts', 'drinks']
+const categoryImages = { starters: 'tandoor.jpg', mains: 'butter-chicken.jpg', desserts: 'dessert.jpg', drinks: 'thali.jpg' }
 
 export default function Menu() {
   const t = useTranslations('menu')
   const locale = useLocale()
   const [activeCategory, setActiveCategory] = useState<MenuCategory>('starters')
-
-  const categories: MenuCategory[] = ['starters', 'mains', 'desserts', 'drinks']
+  const tabRefs = useRef<Array<HTMLButtonElement | null>>([])
   const vegLabel = t('veg')
   const spicyLabel = t('spicy')
 
   return (
-    <section id="menu" className="section-padding bg-ivory">
-      <div className="max-w-5xl mx-auto">
-        <p className="section-eyebrow mb-5">{t('label')}</p>
-        <h2 className="section-title mb-3">{t('title')}</h2>
-        <GoldenRule />
-
-        {/* Category tabs */}
-        <div
-          role="tablist"
-          aria-label={t('title')}
-          className="flex flex-wrap gap-x-1 mt-10 mb-10 border-b border-sand"
-        >
-          {categories.map((cat) => {
-            const isActive = activeCategory === cat
-            return (
-              <button
-                key={cat}
-                type="button"
-                role="tab"
-                aria-selected={isActive}
-                aria-controls={`menu-panel-${cat}`}
-                id={`menu-tab-${cat}`}
-                onClick={() => setActiveCategory(cat)}
-                className={`relative px-5 py-3 text-xs tracking-widest uppercase transition-colors duration-200 ${
-                  isActive ? 'text-charcoal' : 'text-muted hover:text-charcoal'
-                }`}
-              >
-                {t(`categories.${cat}`)}
-                <span
-                  aria-hidden="true"
-                  className={`absolute left-5 right-5 -bottom-px h-px transition-colors duration-200 ${
-                    isActive ? 'bg-gold' : 'bg-transparent'
-                  }`}
-                />
-              </button>
-            )
-          })}
+    <section id="menu" className="menu-section section-padding">
+      <div className="page-width">
+        <div className="section-heading-row">
+          <div><p className="section-eyebrow">02 / {t('label')}</p><h2 className="display-title">{t('title')}<br /><em>{t('title_accent')}</em></h2></div>
+          <p className="body-copy menu-intro">{t('intro')}</p>
         </div>
-
-        {/* Legend */}
-        <div className="flex items-center gap-6 mb-2 text-[10px] tracking-widest uppercase text-muted">
-          <span className="inline-flex items-center gap-2">
-            <DietaryGlyph type="veg" vegLabel={vegLabel} spicyLabel={spicyLabel} />
-            {vegLabel}
-          </span>
-          <span className="inline-flex items-center gap-2">
-            <DietaryGlyph type="spicy" vegLabel={vegLabel} spicyLabel={spicyLabel} />
-            {spicyLabel}
-          </span>
-        </div>
-
-        {/* Menu items */}
-        <div
-          key={activeCategory}
-          role="tabpanel"
-          id={`menu-panel-${activeCategory}`}
-          aria-labelledby={`menu-tab-${activeCategory}`}
-          className="divide-y divide-sand animate-fade-in"
-        >
-          {menu[activeCategory].map((item) => (
-            <article
-              key={item.id}
-              className="py-6 grid grid-cols-[1fr_auto] items-baseline gap-x-6"
-            >
-              <div className="flex items-baseline gap-2 min-w-0 flex-wrap">
-                <h3 className="font-serif italic text-lg font-normal text-charcoal leading-snug">
-                  {locale === 'en' ? item.nameEN : item.nameDE}
-                </h3>
-                {item.dietary && (
-                  <DietaryGlyph
-                    type={item.dietary}
-                    vegLabel={vegLabel}
-                    spicyLabel={spicyLabel}
-                  />
-                )}
-              </div>
-              <span className="font-serif text-base text-charcoal tabular-nums">
-                €{item.price.toFixed(2).replace('.', ',')}
-              </span>
-              <p className="col-span-2 mt-1 text-sm text-muted leading-relaxed max-w-prose">
-                {locale === 'en' ? item.descEN : item.descDE}
-              </p>
-            </article>
-          ))}
+        <div className="menu-layout">
+          <figure className="menu-photo">
+            <Image key={activeCategory} src={`/gallery/${categoryImages[activeCategory]}`} alt={t(`image_alt.${activeCategory}`)} fill sizes="(min-width: 1024px) 38vw, 100vw" className="object-cover animate-fade" />
+            <figcaption><span>{t('photo_note')}</span><span>{t(`categories.${activeCategory}`)}</span></figcaption>
+          </figure>
+          <div className="menu-content">
+            <div role="tablist" aria-label={t('label')} className="menu-tabs">
+              {categories.map((cat, index) => (
+                <button key={cat} ref={(el) => { tabRefs.current[index] = el }} type="button" role="tab" aria-selected={activeCategory === cat} aria-controls={`menu-panel-${cat}`} id={`menu-tab-${cat}`} tabIndex={activeCategory === cat ? 0 : -1}
+                  onClick={() => setActiveCategory(cat)}
+                  onKeyDown={(event) => {
+                    const next = event.key === 'ArrowRight' ? (index + 1) % categories.length : event.key === 'ArrowLeft' ? (index + categories.length - 1) % categories.length : event.key === 'Home' ? 0 : event.key === 'End' ? categories.length - 1 : null
+                    if (next === null) return
+                    event.preventDefault()
+                    setActiveCategory(categories[next])
+                    tabRefs.current[next]?.focus()
+                  }}
+                >{t(`categories.${cat}`)}</button>
+              ))}
+            </div>
+            <div key={activeCategory} role="tabpanel" tabIndex={0} id={`menu-panel-${activeCategory}`} aria-labelledby={`menu-tab-${activeCategory}`} className="menu-items animate-fade-in">
+              {menu[activeCategory].map((item, index) => (
+                <article key={item.id} className="menu-item">
+                  <span className="menu-number" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+                  <div><h3>{locale === 'en' ? item.nameEN : item.nameDE}{item.dietary && <DietaryGlyph type={item.dietary} vegLabel={vegLabel} spicyLabel={spicyLabel} />}</h3><p>{locale === 'en' ? item.descEN : item.descDE}</p></div>
+                  <span className="menu-price">{new Intl.NumberFormat(locale, { style: 'currency', currency: 'EUR' }).format(item.price)}</span>
+                </article>
+              ))}
+            </div>
+            <div className="menu-legend"><span><DietaryGlyph type="veg" vegLabel={vegLabel} spicyLabel={spicyLabel} />{vegLabel}</span><span><DietaryGlyph type="spicy" vegLabel={vegLabel} spicyLabel={spicyLabel} />{spicyLabel}</span></div>
+            <p className="menu-footnote">{t('footnote')}</p>
+          </div>
         </div>
       </div>
     </section>

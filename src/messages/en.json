@@ -9,28 +9,40 @@
     "gallery": "Gallery",
     "contact": "Contact",
     "reserve": "Reserve a Table",
+    "reserve_short": "Book",
     "lang": "DE",
     "open_menu": "Open menu",
     "close_menu": "Close menu"
   },
   "hero": {
     "eyebrow": "Authentic Indian · Nürtingen",
-    "headline": "Welcome to",
-    "headline_accent": "Jilebi",
-    "tagline": "Experience the flavours of India — crafted with care, served with passion.",
+    "headline": "A little India.",
+    "headline_accent": "A lot of soul.",
+    "tagline": "Gather around. Discover the warmth of Indian cooking, right here in the heart of Nürtingen.",
     "cta_menu": "View Menu",
     "cta_reserve": "Book a Table",
-    "image_alt": "A carefully plated Indian dish from Jilebi"
+    "image_alt": "Indian thali with fragrant rice, curries, naan and mango lassi",
+    "welcome": "Good food. Good company.",
+    "courtyard_alt": "The flower-covered entrance to Jilebi",
+    "inset_caption": "A little escape, close to home.",
+    "seal": "Made with love",
+    "bottom_note": "Freshly prepared. Generously shared.",
+    "discover": "Come on in"
   },
   "about": {
     "label": "Our Story",
-    "title": "More Than a Restaurant",
-    "body": "Jilebi was born from a deep love for Indian cuisine. Each dish tells a story — of spice-scented markets, of family recipes passed down through generations, and of a desire to bring authentic Indian hospitality to Nürtingen. We use fresh, hand-picked ingredients and prepare everything daily from scratch.",
-    "image_alt": "Warmly lit interior of Jilebi restaurant"
+    "title": "From our kitchen,",
+    "body": "The warmth of the tandoor. The fragrance of freshly ground spices. Recipes passed from one generation to the next. At Jilebi, we bring the food we love to the place we call home, with fresh ingredients and a generous welcome.",
+    "image_alt": "Warmly lit interior of Jilebi restaurant",
+    "title_accent": "with love.",
+    "intro": "Some meals stay with you. We make those.",
+    "caption": "Your evening, a little warmer.",
+    "cta": "Explore our kitchen",
+    "signature": "Indian roots. A Nürtingen home."
   },
   "menu": {
     "label": "Our Kitchen",
-    "title": "Menu",
+    "title": "Follow your",
     "categories": {
       "starters": "Starters",
       "mains": "Mains",
@@ -38,7 +50,17 @@
       "drinks": "Drinks"
     },
     "veg": "Vegetarian",
-    "spicy": "Spicy"
+    "spicy": "Spicy",
+    "title_accent": "appetite.",
+    "intro": "A little heat, a little sweetness, a world of flavour. Find your favourite, or discover something new.",
+    "photo_note": "From the Jilebi kitchen",
+    "footnote": "Questions about ingredients or allergens? We are happy to help.",
+    "image_alt": {
+      "starters": "A chef preparing fresh naan in the tandoor oven",
+      "mains": "Butter chicken with a swirl of cream and fresh coriander",
+      "desserts": "Gulab jamun served with pistachios",
+      "drinks": "Mango lassi served alongside an Indian thali"
+    }
   },
   "reservation": {
     "label": "Reserve a Table",
@@ -84,14 +106,22 @@
     "success_book_another": "Book another",
     "error": "Something went wrong. Please try again.",
     "error_slot_full": "This time slot just filled up. Please pick another time — we've refreshed the availability for you.",
-    "error_rate_limited": "Too many attempts. Please wait a minute and try again."
+    "error_rate_limited": "Too many attempts. Please wait a minute and try again.",
+    "intro": "An evening for two. A table full of friends. There is always a good reason to get together.",
+    "note": "Choose your date, find your time, and we will take care of the rest.",
+    "help": "Planning something special?",
+    "card_title": "A place at our table.",
+    "card_received": "We look forward to welcoming you.",
+    "choose_time_hint": "Choose a time that suits you."
   },
   "gallery": {
     "label": "A Glimpse Inside",
-    "title": "Gallery",
+    "title": "Pull up",
     "prev": "Previous image",
     "next": "Next image",
-    "close": "Close"
+    "close": "Close",
+    "title_accent": "a chair.",
+    "intro": "The food, the room, the little moments in between. A taste of what awaits you."
   },
   "footer": {
     "hours_title": "Opening Hours",
@@ -107,7 +137,12 @@
     "impressum": "Legal Notice",
     "datenschutz": "Privacy Policy",
     "copyright": "© 2026 Jilebi. All rights reserved.",
-    "demo_notice": "Portfolio demo · contact details are placeholders"
+    "demo_notice": "Portfolio demo · contact details are placeholders",
+    "title": "Stay a little longer.",
+    "subtitle": "Indian flavours. Nürtingen heart.",
+    "directions": "Find your way",
+    "back_top": "Back to top",
+    "location_title": "Find us in Nürtingen"
   },
   "email": {
     "confirm_subject": "Your reservation at Jilebi — Confirmation",

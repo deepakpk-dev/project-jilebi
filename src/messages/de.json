@@ -9,28 +9,40 @@
     "gallery": "Galerie",
     "contact": "Kontakt",
     "reserve": "Tisch reservieren",
+    "reserve_short": "Buchen",
     "lang": "EN",
     "open_menu": "Menü öffnen",
     "close_menu": "Menü schließen"
   },
   "hero": {
     "eyebrow": "Authentisch Indisch · Nürtingen",
-    "headline": "Willkommen bei",
-    "headline_accent": "Jilebi",
-    "tagline": "Erleben Sie die Aromen Indiens — handwerklich zubereitet, mit Leidenschaft serviert.",
+    "headline": "Ein Stück Indien.",
+    "headline_accent": "Ganz viel Seele.",
+    "tagline": "Zusammenkommen und genießen. Entdecken Sie die Wärme indischer Küche, mitten im Herzen von Nürtingen.",
     "cta_menu": "Speisekarte",
     "cta_reserve": "Tisch buchen",
-    "image_alt": "Sorgfältig angerichtetes indisches Gericht von Jilebi"
+    "image_alt": "Indisches Thali mit duftendem Reis, Currys, Naan und Mango-Lassi",
+    "welcome": "Gutes Essen. Gute Gesellschaft.",
+    "courtyard_alt": "Der blumengeschmückte Eingang von Jilebi",
+    "inset_caption": "Eine kleine Auszeit, ganz nah.",
+    "seal": "Mit Liebe gemacht",
+    "bottom_note": "Frisch zubereitet. Mit Freude geteilt.",
+    "discover": "Hereinspaziert"
   },
   "about": {
     "label": "Unsere Geschichte",
-    "title": "Mehr als ein Restaurant",
-    "body": "Jilebi wurde aus einer tiefen Leidenschaft für die Küche Indiens geboren. Jedes Gericht erzählt eine Geschichte — von gewürzduftenden Märkten, von Familienrezepten, die über Generationen weitergegeben wurden, und von dem Wunsch, echte indische Gastfreundschaft nach Nürtingen zu bringen. Wir verwenden frische, handverlesene Zutaten und bereiten alles täglich frisch zu.",
-    "image_alt": "Warm beleuchteter Innenraum des Restaurants Jilebi"
+    "title": "Aus unserer Küche,",
+    "body": "Die Wärme des Tandoors. Der Duft frisch gemahlener Gewürze. Rezepte, die von Generation zu Generation weitergegeben werden. Bei Jilebi bringen wir die Küche, die wir lieben, an den Ort, den wir Zuhause nennen. Mit frischen Zutaten und echter Gastfreundschaft.",
+    "image_alt": "Warm beleuchteter Innenraum des Restaurants Jilebi",
+    "title_accent": "von Herzen.",
+    "intro": "Manche Mahlzeiten bleiben in Erinnerung. Dafür kochen wir.",
+    "caption": "Ein Abend zum Wohlfühlen.",
+    "cta": "Unsere Küche entdecken",
+    "signature": "Indische Wurzeln. In Nürtingen zuhause."
   },
   "menu": {
     "label": "Unsere Küche",
-    "title": "Speisekarte",
+    "title": "Worauf haben",
     "categories": {
       "starters": "Vorspeisen",
       "mains": "Hauptgerichte",
@@ -38,7 +50,17 @@
       "drinks": "Getränke"
     },
     "veg": "Vegetarisch",
-    "spicy": "Scharf"
+    "spicy": "Scharf",
+    "title_accent": "Sie Appetit?",
+    "intro": "Ein wenig Schärfe, ein wenig Süße, eine Welt voller Aromen. Finden Sie Ihr Lieblingsgericht oder entdecken Sie etwas Neues.",
+    "photo_note": "Aus der Jilebi-Küche",
+    "footnote": "Fragen zu Zutaten oder Allergenen? Sprechen Sie uns gerne an.",
+    "image_alt": {
+      "starters": "Ein Koch bereitet frisches Naan im Tandoor-Ofen zu",
+      "mains": "Butter Chicken mit Sahne und frischem Koriander",
+      "desserts": "Gulab Jamun mit Pistazien",
+      "drinks": "Mango-Lassi zu einem indischen Thali"
+    }
   },
   "reservation": {
     "label": "Tisch reservieren",
@@ -84,14 +106,22 @@
     "success_book_another": "Weitere Reservierung",
     "error": "Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut.",
     "error_slot_full": "Diese Uhrzeit ist soeben ausgebucht. Bitte wählen Sie eine andere Zeit — die Verfügbarkeit wurde aktualisiert.",
-    "error_rate_limited": "Zu viele Versuche. Bitte warten Sie eine Minute und versuchen Sie es erneut."
+    "error_rate_limited": "Zu viele Versuche. Bitte warten Sie eine Minute und versuchen Sie es erneut.",
+    "intro": "Ein Abend zu zweit. Ein Tisch voller Freunde. Es gibt immer einen guten Grund, zusammenzukommen.",
+    "note": "Datum aussuchen, Uhrzeit wählen. Um den Rest kümmern wir uns.",
+    "help": "Sie planen etwas Besonderes?",
+    "card_title": "Ein Platz für Genuss.",
+    "card_received": "Wir freuen uns auf Sie.",
+    "choose_time_hint": "Wählen Sie Ihre Wunschzeit."
   },
   "gallery": {
     "label": "Einblicke",
-    "title": "Galerie",
+    "title": "Nehmen Sie",
     "prev": "Vorheriges Bild",
     "next": "Nächstes Bild",
-    "close": "Schließen"
+    "close": "Schließen",
+    "title_accent": "Platz.",
+    "intro": "Das Essen, der Raum, die kleinen Momente dazwischen. Ein Vorgeschmack auf Ihren Besuch."
   },
   "footer": {
     "hours_title": "Öffnungszeiten",
@@ -107,7 +137,12 @@
     "impressum": "Impressum",
     "datenschutz": "Datenschutz",
     "copyright": "© 2026 Jilebi. Alle Rechte vorbehalten.",
-    "demo_notice": "Portfolio-Demo · Kontaktdaten sind Platzhalter"
+    "demo_notice": "Portfolio-Demo · Kontaktdaten sind Platzhalter",
+    "title": "Bleiben Sie noch ein wenig.",
+    "subtitle": "Indische Aromen. Nürtinger Herz.",
+    "directions": "Wegbeschreibung",
+    "back_top": "Nach oben",
+    "location_title": "Hier finden Sie uns"
   },
   "email": {
     "confirm_subject": "Ihre Reservierung bei Jilebi — Bestätigung",
