@@ -61,6 +61,18 @@ describe('Reservation', () => {
     expect(markup).not.toContain('no_slots')
   })
 
+  it('shows only the request error when availability cannot be loaded', async () => {
+    ;(global.fetch as jest.Mock).mockResolvedValue({
+      ok: false,
+      status: 500,
+    })
+
+    render(<Reservation />)
+
+    expect(await screen.findByText('error')).toBeInTheDocument()
+    expect(screen.queryByText('no_slots')).not.toBeInTheDocument()
+  })
+
   it('formats an English booking date without German punctuation', async () => {
     render(<Reservation />)
     await waitFor(() => expect(global.fetch).toHaveBeenCalledTimes(1))
