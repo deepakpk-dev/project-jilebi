@@ -35,7 +35,7 @@ export default function Gallery() {
             const sizes = i === 0
               ? '(min-width: 768px) 40vw, 100vw'
               : i === galleryImages.length - 1
-                ? '(min-width: 768px) 62vw, 50vw'
+                ? '(min-width: 768px) 62vw, 100vw'
                 : '(min-width: 768px) 31vw, 50vw'
             return (
               <li key={img.src}>

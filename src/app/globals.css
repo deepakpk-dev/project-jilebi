@@ -262,8 +262,8 @@
   .gallery-grid li:first-child { grid-row: auto; grid-column: span 2; }
   .gallery-grid li:first-child .gallery-tile-image { min-height: 340px; }
   .gallery-tile-image { min-height: 200px; }
-  .gallery-grid li:last-child { grid-column: auto; }
-  .gallery-grid li:last-child .gallery-tile-image { min-height: 200px; }
+  .gallery-grid li:last-child { grid-column: span 2; }
+  .gallery-grid li:last-child .gallery-tile-image { min-height: 240px; }
   .reservation-intro { display: block; }
   .reservation-intro .section-eyebrow { margin-bottom: 1.5rem; }
   .reservation-note, .reservation-help { margin-top: 1.5rem; }
