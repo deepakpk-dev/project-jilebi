@@ -180,7 +180,7 @@
 .gallery-section { background: oklch(95.6% .018 80); }
 .gallery-grid { display: grid; grid-template-columns: 1.25fr 1fr 1fr; gap: 1.25rem; }
 .gallery-grid li:first-child { grid-row: span 2; }
-.gallery-grid li:last-child { grid-column: span 2; }
+.gallery-grid li:last-child { grid-column: 1 / -1; }
 .gallery-tile { display: flex; flex-direction: column; width: 100%; height: 100%; text-align: left; }
 .gallery-tile-image { display: block; position: relative; overflow: hidden; width: 100%; flex: 1; min-height: 210px; background: var(--color-sand); }
 .gallery-grid li:first-child .gallery-tile-image { min-height: 455px; }
@@ -262,7 +262,6 @@
   .gallery-grid li:first-child { grid-row: auto; grid-column: span 2; }
   .gallery-grid li:first-child .gallery-tile-image { min-height: 340px; }
   .gallery-tile-image { min-height: 200px; }
-  .gallery-grid li:last-child { grid-column: auto; }
   .gallery-grid li:last-child .gallery-tile-image { min-height: 200px; }
   .reservation-intro { display: block; }
   .reservation-intro .section-eyebrow { margin-bottom: 1.5rem; }
