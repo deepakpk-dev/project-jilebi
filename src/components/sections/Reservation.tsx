@@ -245,11 +245,10 @@ export default function Reservation() {
     <section id="reservation" className="reservation-section section-padding">
       <div className="page-width reservation-layout">
         <div className="reservation-intro">
-          <p className="section-eyebrow">04 / {t('label')}</p>
+          <p className="section-eyebrow">03 / {t('label')}</p>
           <h2 className="display-title">{t('title')}</h2>
           <p className="body-copy">{t('intro')}</p>
           <div className="reservation-note"><span aria-hidden="true">✳</span><p>{t('note')}</p></div>
-          <p className="reservation-help">{t('help')}<a href="tel:+497022904030">+49 7022 904 030 ↗</a></p>
         </div>
         <div className="reservation-booking">
         <div className="booking-heading">
@@ -459,6 +458,7 @@ export default function Reservation() {
                 </div>
 
                 <p className="section-eyebrow mb-8">{t('details_label')}</p>
+                <p className="booking-field-guidance">{t('form.required_hint')}</p>
                 {Object.keys(formErrors).length > 0 && (
                   <p role="alert" className="sr-only">{t('form.validation_error')}</p>
                 )}
@@ -525,9 +525,10 @@ export default function Reservation() {
                         setFormErrors((current) => ({ ...current, phone: undefined }))
                       }}
                       aria-invalid={Boolean(formErrors.phone)}
-                      aria-describedby={formErrors.phone ? 'res-phone-error' : undefined}
+                      aria-describedby={formErrors.phone ? 'res-phone-hint res-phone-error' : 'res-phone-hint'}
                       className={fieldClass}
                     />
+                    <p id="res-phone-hint" className="booking-field-hint">{t('form.phone_hint')}</p>
                     {formErrors.phone && <p id="res-phone-error" className="mt-2 text-xs text-chili">{formErrors.phone}</p>}
                   </div>
 
@@ -567,6 +568,7 @@ export default function Reservation() {
           </form>
         )}
         </div>
+        <p className="reservation-help">{t('help')}<a href="tel:+497022904030">+49 7022 904 030 ↗</a></p>
       </div>
     </section>
   )

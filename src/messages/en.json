@@ -21,11 +21,9 @@
     "tagline": "Gather around. Discover the warmth of Indian cooking, right here in the heart of Nürtingen.",
     "cta_menu": "View Menu",
     "cta_reserve": "Book a Table",
-    "image_alt": "Indian thali with fragrant rice, curries, naan and mango lassi",
+    "image_alt": "Butter chicken with cream and fresh coriander, served with naan beside a sunlit window",
+    "image_caption": "A little warmth, served generously.",
     "welcome": "Good food. Good company.",
-    "courtyard_alt": "The flower-covered entrance to Jilebi",
-    "inset_caption": "A little escape, close to home.",
-    "seal": "Made with love",
     "bottom_note": "Freshly prepared. Generously shared.",
     "discover": "Come on in"
   },
@@ -56,10 +54,10 @@
     "photo_note": "From the Jilebi kitchen",
     "footnote": "Questions about ingredients or allergens? We are happy to help.",
     "image_alt": {
-      "starters": "A chef preparing fresh naan in the tandoor oven",
+      "starters": "Golden samosas filled with potatoes and peas, served with mint chutney",
       "mains": "Butter chicken with a swirl of cream and fresh coriander",
       "desserts": "Gulab jamun served with pistachios",
-      "drinks": "Mango lassi served alongside an Indian thali"
+      "drinks": "A glass of creamy mango lassi with cardamom and fresh mango"
     }
   },
   "reservation": {
@@ -95,7 +93,9 @@
       "phone_error": "Please enter your phone number.",
       "validation_error": "Please correct the highlighted fields.",
       "notes": "Notes (optional)",
-      "notes_label": "Notes",
+      "notes_label": "Notes (optional)",
+      "required_hint": "All fields are required except Notes.",
+      "phone_hint": "So we can contact you about your reservation.",
       "submit": "Reserve Now",
       "submitting": "Sending…"
     },
@@ -137,6 +137,7 @@
     "impressum": "Legal Notice",
     "datenschutz": "Privacy Policy",
     "copyright": "© 2026 Jilebi. All rights reserved.",
+    "credit": "Designed and developed by Deepak Prabhakar.",
     "demo_notice": "Portfolio demo · contact details are placeholders",
     "title": "Stay a little longer.",
     "subtitle": "Indian flavours. Nürtingen heart.",

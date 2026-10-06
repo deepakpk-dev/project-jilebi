@@ -38,7 +38,10 @@ export default function Footer() {
           </div>
         </div>
         <div className="footer-bottom">
-          <p>{t('copyright')}</p>
+          <p>
+            {t('copyright')}
+            <a href="https://builtbydeepak.com/" target="_blank" rel="noreferrer" className="underline underline-offset-4">{t('credit')}</a>
+          </p>
           <p className="footer-demo">{t('demo_notice')}</p>
           <div>
             <Link href="/impressum">{t('impressum')}</Link>

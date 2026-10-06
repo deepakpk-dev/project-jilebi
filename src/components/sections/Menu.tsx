@@ -7,7 +7,7 @@ import { menu, MenuCategory } from '@/data/menu'
 import DietaryGlyph from '@/components/ui/DietaryGlyph'
 
 const categories: MenuCategory[] = ['starters', 'mains', 'desserts', 'drinks']
-const categoryImages = { starters: 'tandoor.jpg', mains: 'butter-chicken.jpg', desserts: 'dessert.jpg', drinks: 'thali.jpg' }
+const categoryImages: Record<MenuCategory, string> = { starters: 'samosas.jpg', mains: 'butter-chicken.jpg', desserts: 'dessert.jpg', drinks: 'mango-lassi.jpg' }
 
 export default function Menu() {
   const t = useTranslations('menu')

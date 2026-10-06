@@ -1,0 +1,352 @@
+- generic [active] [ref=e1]:
+  - link "Skip to content" [ref=e2] [cursor=pointer]:
+    - /url: "#main"
+  - navigation [ref=e3]:
+    - generic [ref=e4]:
+      - link "Jilebi" [ref=e5] [cursor=pointer]:
+        - /url: /en
+        - text: Jilebi.
+      - generic [ref=e6]:
+        - link "About" [ref=e7] [cursor=pointer]:
+          - /url: /en#about
+        - link "Menu" [ref=e8] [cursor=pointer]:
+          - /url: /en#menu
+        - link "Gallery" [ref=e9] [cursor=pointer]:
+          - /url: /en#gallery
+        - link "Contact" [ref=e10] [cursor=pointer]:
+          - /url: /en#contact
+        - link "DE" [ref=e11] [cursor=pointer]:
+          - /url: /de
+      - link "Reserve a Table" [ref=e12] [cursor=pointer]:
+        - /url: /en#reservation
+        - text: Reserve a Table
+        - generic [aria-hidden] [ref=e13]: ↗
+  - main [ref=e14]:
+    - generic [ref=e15]:
+      - generic [ref=e16]:
+        - generic [ref=e17]: Authentic Indian · Nürtingen
+        - generic [ref=e18]: Good food. Good company.
+      - generic [ref=e19]:
+        - generic [ref=e20]:
+          - heading "Jilebi" [level=1] [ref=e21]: Jilebi.
+          - paragraph [ref=e22]:
+            - text: A little India.
+            - emphasis [ref=e23]: A lot of soul.
+          - paragraph [ref=e24]: Gather around. Discover the warmth of Indian cooking, right here in the heart of Nürtingen.
+          - generic [ref=e25]:
+            - link "Book a Table" [ref=e26] [cursor=pointer]:
+              - /url: "#reservation"
+              - text: Book a Table
+              - generic [aria-hidden] [ref=e27]: ↗
+            - link "View Menu" [ref=e28] [cursor=pointer]:
+              - /url: "#menu"
+              - text: View Menu
+              - generic [aria-hidden] [ref=e29]: ↗
+        - generic [ref=e30]:
+          - img "Indian thali with fragrant rice, curries, naan and mango lassi" [ref=e32]
+          - generic [ref=e33]:
+            - img "The flower-covered entrance to Jilebi" [ref=e34]
+            - generic [ref=e35]: A little escape, close to home.
+          - generic [ref=e36]:
+            - generic [aria-hidden] [ref=e37]: ✳
+            - generic [ref=e38]: Made with love
+      - generic [ref=e39]:
+        - generic [ref=e40]: Freshly prepared. Generously shared.
+        - link "Come on in" [ref=e41] [cursor=pointer]:
+          - /url: "#about"
+          - text: Come on in
+          - generic [aria-hidden] [ref=e42]: ↓
+    - generic [ref=e44]:
+      - generic [ref=e45]:
+        - img "Warmly lit interior of Jilebi restaurant" [ref=e46]
+        - generic [ref=e47]: Your evening, a little warmer.
+      - generic [ref=e48]:
+        - paragraph [ref=e49]: 01 / Our Story
+        - heading [level=2] [ref=e50]:
+          - text: From our kitchen,
+          - emphasis [ref=e51]: with love.
+        - paragraph [ref=e52]: Some meals stay with you. We make those.
+        - paragraph [ref=e53]: The warmth of the tandoor. The fragrance of freshly ground spices. Recipes passed from one generation to the next. At Jilebi, we bring the food we love to the place we call home, with fresh ingredients and a generous welcome.
+        - link "Explore our kitchen" [ref=e54] [cursor=pointer]:
+          - /url: "#menu"
+          - text: Explore our kitchen
+          - generic [aria-hidden] [ref=e55]: ↗
+        - generic [ref=e56]:
+          - generic [aria-hidden] [ref=e57]: J.
+          - paragraph [ref=e58]: Indian roots. A Nürtingen home.
+    - generic [ref=e60]:
+      - generic [ref=e61]:
+        - generic [ref=e62]:
+          - paragraph [ref=e63]: 02 / Our Kitchen
+          - heading [level=2] [ref=e64]:
+            - text: Follow your
+            - emphasis [ref=e65]: appetite.
+        - paragraph [ref=e66]: A little heat, a little sweetness, a world of flavour. Find your favourite, or discover something new.
+      - generic [ref=e67]:
+        - figure "From the Jilebi kitchen Starters" [ref=e68]:
+          - img "A chef preparing fresh naan in the tandoor oven" [ref=e69]
+          - generic [ref=e70]:
+            - generic [ref=e71]: From the Jilebi kitchen
+            - generic [ref=e72]: Starters
+        - generic [ref=e73]:
+          - tablist "Our Kitchen" [ref=e74]:
+            - tab "Starters" [selected] [ref=e75] [cursor=pointer]
+            - tab "Mains" [ref=e76] [cursor=pointer]
+            - tab "Desserts" [ref=e77] [cursor=pointer]
+            - tab "Drinks" [ref=e78] [cursor=pointer]
+          - tabpanel "Starters" [ref=e79]:
+            - article [ref=e80]:
+              - generic [aria-hidden] [ref=e81]: "01"
+              - generic [ref=e82]:
+                - heading [level=3] [ref=e83]:
+                  - text: Samosa (2 pcs)
+                  - img "Vegetarian" [ref=e85]
+                - paragraph [ref=e88]: Crispy pastry filled with spiced potatoes and peas
+              - generic [ref=e89]: €6.90
+            - article [ref=e90]:
+              - generic [aria-hidden] [ref=e91]: "02"
+              - generic [ref=e92]:
+                - heading "Chicken Tikka" [level=3] [ref=e93]
+                - paragraph [ref=e94]: Marinated chicken skewers from the tandoor oven
+              - generic [ref=e95]: €10.90
+            - article [ref=e96]:
+              - generic [aria-hidden] [ref=e97]: "03"
+              - generic [ref=e98]:
+                - heading [level=3] [ref=e99]:
+                  - text: Onion Bhaji
+                  - img "Vegetarian" [ref=e101]
+                - paragraph [ref=e104]: Fried onion rings in chickpea batter with coriander
+              - generic [ref=e105]: €7.50
+          - generic [ref=e106]:
+            - generic [ref=e107]:
+              - img "Vegetarian" [ref=e109]
+              - text: Vegetarian
+            - generic [ref=e112]:
+              - img "Spicy" [ref=e114]
+              - text: Spicy
+          - paragraph [ref=e116]: Questions about ingredients or allergens? We are happy to help.
+    - generic [ref=e118]:
+      - generic [ref=e119]:
+        - generic [ref=e120]:
+          - paragraph [ref=e121]: 03 / A Glimpse Inside
+          - heading [level=2] [ref=e122]:
+            - text: Pull up
+            - emphasis [ref=e123]: a chair.
+        - paragraph [ref=e124]: The food, the room, the little moments in between. A taste of what awaits you.
+      - list [ref=e125]:
+        - listitem [ref=e126]:
+          - button "Butter Chicken" [ref=e127] [cursor=pointer]:
+            - img "Butter Chicken" [ref=e129]
+            - generic [ref=e131]:
+              - generic [ref=e132]: Butter Chicken
+              - generic [aria-hidden] [ref=e133]: ↗
+        - listitem [ref=e134]:
+          - button "Restaurant interior" [ref=e135] [cursor=pointer]:
+            - img "Restaurant interior" [ref=e137]
+            - generic [ref=e139]:
+              - generic [ref=e140]: Restaurant interior
+              - generic [aria-hidden] [ref=e141]: ↗
+        - listitem [ref=e142]:
+          - button "Tandoor oven" [ref=e143] [cursor=pointer]:
+            - img "Tandoor oven" [ref=e145]
+            - generic [ref=e147]:
+              - generic [ref=e148]: Tandoor oven
+              - generic [aria-hidden] [ref=e149]: ↗
+        - listitem [ref=e150]:
+          - button "Thali plate" [ref=e151] [cursor=pointer]:
+            - img "Thali plate" [ref=e153]
+            - generic [ref=e155]:
+              - generic [ref=e156]: Thali plate
+              - generic [aria-hidden] [ref=e157]: ↗
+        - listitem [ref=e158]:
+          - button "Gulab Jamun dessert" [ref=e159] [cursor=pointer]:
+            - img "Gulab Jamun dessert" [ref=e161]
+            - generic [ref=e163]:
+              - generic [ref=e164]: Gulab Jamun dessert
+              - generic [aria-hidden] [ref=e165]: ↗
+        - listitem [ref=e166]:
+          - button "Table setting" [ref=e167] [cursor=pointer]:
+            - img "Table setting" [ref=e169]
+            - generic [ref=e171]:
+              - generic [ref=e172]: Table setting
+              - generic [aria-hidden] [ref=e173]: ↗
+    - generic [ref=e175]:
+      - generic [ref=e176]:
+        - paragraph [ref=e177]: 04 / Reserve a Table
+        - heading "Book a Table" [level=2] [ref=e178]
+        - paragraph [ref=e179]: An evening for two. A table full of friends. There is always a good reason to get together.
+        - generic [ref=e180]:
+          - generic [aria-hidden] [ref=e181]: ✳
+          - paragraph [ref=e182]: Choose your date, find your time, and we will take care of the rest.
+      - generic [ref=e183]:
+        - generic [ref=e184]:
+          - generic [ref=e185]:
+            - paragraph [ref=e186]: Jilebi · Nürtingen
+            - heading "A place at our table." [level=3] [ref=e187]
+          - generic [aria-hidden] [ref=e188]: J.
+        - generic [ref=e189]:
+          - list "Booking progress" [ref=e190]:
+            - listitem [ref=e191]:
+              - generic [aria-hidden] [ref=e192]: "01"
+              - generic [ref=e193]: Find a table
+            - listitem [ref=e194]:
+              - generic [aria-hidden] [ref=e195]: "02"
+              - generic [ref=e196]: Your details
+          - generic [ref=e197]:
+            - generic [ref=e198]:
+              - paragraph [ref=e199]: Choose a date
+              - generic [ref=e201]:
+                - navigation "Navigation bar" [ref=e202]:
+                  - button "Go to the Previous Month" [ref=e203] [cursor=pointer]
+                  - button "Go to the Next Month" [ref=e206] [cursor=pointer]
+                - generic [ref=e209]:
+                  - status [ref=e211]: October 2026
+                  - grid "October 2026" [ref=e212]:
+                    - rowgroup [aria-hidden] [ref=e213]:
+                      - row [ref=e214]:
+                        - columnheader [ref=e215]: Mo
+                        - columnheader [ref=e216]: Tu
+                        - columnheader [ref=e217]: We
+                        - columnheader [ref=e218]: Th
+                        - columnheader [ref=e219]: Fr
+                        - columnheader [ref=e220]: Sa
+                        - columnheader [ref=e221]: Su
+                    - rowgroup [ref=e222]:
+                      - row [ref=e223]:
+                        - gridcell [ref=e224]:
+                          - button "Thursday, 1 October 2026" [disabled] [ref=e225]: "1"
+                        - gridcell [ref=e226]:
+                          - button "Friday, 2 October 2026" [disabled] [ref=e227]: "2"
+                        - gridcell [ref=e228]:
+                          - button "Saturday, 3 October 2026" [disabled] [ref=e229]: "3"
+                        - gridcell [ref=e230]:
+                          - button "Sunday, 4 October 2026" [disabled] [ref=e231]: "4"
+                      - row [ref=e232]:
+                        - gridcell [ref=e233]:
+                          - button "Today, Monday, 5 October 2026" [disabled] [ref=e234]: "5"
+                        - gridcell [selected] [ref=e235]:
+                          - button "Tuesday, 6 October 2026, selected" [ref=e236] [cursor=pointer]: "6"
+                        - gridcell [ref=e237]:
+                          - button "Wednesday, 7 October 2026" [ref=e238] [cursor=pointer]: "7"
+                        - gridcell [ref=e239]:
+                          - button "Thursday, 8 October 2026" [ref=e240] [cursor=pointer]: "8"
+                        - gridcell [ref=e241]:
+                          - button "Friday, 9 October 2026" [ref=e242] [cursor=pointer]: "9"
+                        - gridcell [ref=e243]:
+                          - button "Saturday, 10 October 2026" [ref=e244] [cursor=pointer]: "10"
+                        - gridcell [ref=e245]:
+                          - button "Sunday, 11 October 2026" [ref=e246] [cursor=pointer]: "11"
+                      - row [ref=e247]:
+                        - gridcell [ref=e248]:
+                          - button "Monday, 12 October 2026" [disabled] [ref=e249]: "12"
+                        - gridcell [ref=e250]:
+                          - button "Tuesday, 13 October 2026" [ref=e251] [cursor=pointer]: "13"
+                        - gridcell [ref=e252]:
+                          - button "Wednesday, 14 October 2026" [ref=e253] [cursor=pointer]: "14"
+                        - gridcell [ref=e254]:
+                          - button "Thursday, 15 October 2026" [ref=e255] [cursor=pointer]: "15"
+                        - gridcell [ref=e256]:
+                          - button "Friday, 16 October 2026" [ref=e257] [cursor=pointer]: "16"
+                        - gridcell [ref=e258]:
+                          - button "Saturday, 17 October 2026" [ref=e259] [cursor=pointer]: "17"
+                        - gridcell [ref=e260]:
+                          - button "Sunday, 18 October 2026" [ref=e261] [cursor=pointer]: "18"
+                      - row [ref=e262]:
+                        - gridcell [ref=e263]:
+                          - button "Monday, 19 October 2026" [disabled] [ref=e264]: "19"
+                        - gridcell [ref=e265]:
+                          - button "Tuesday, 20 October 2026" [ref=e266] [cursor=pointer]: "20"
+                        - gridcell [ref=e267]:
+                          - button "Wednesday, 21 October 2026" [ref=e268] [cursor=pointer]: "21"
+                        - gridcell [ref=e269]:
+                          - button "Thursday, 22 October 2026" [ref=e270] [cursor=pointer]: "22"
+                        - gridcell [ref=e271]:
+                          - button "Friday, 23 October 2026" [ref=e272] [cursor=pointer]: "23"
+                        - gridcell [ref=e273]:
+                          - button "Saturday, 24 October 2026" [ref=e274] [cursor=pointer]: "24"
+                        - gridcell [ref=e275]:
+                          - button "Sunday, 25 October 2026" [ref=e276] [cursor=pointer]: "25"
+                      - row [ref=e277]:
+                        - gridcell [ref=e278]:
+                          - button "Monday, 26 October 2026" [disabled] [ref=e279]: "26"
+                        - gridcell [ref=e280]:
+                          - button "Tuesday, 27 October 2026" [ref=e281] [cursor=pointer]: "27"
+                        - gridcell [ref=e282]:
+                          - button "Wednesday, 28 October 2026" [ref=e283] [cursor=pointer]: "28"
+                        - gridcell [ref=e284]:
+                          - button "Thursday, 29 October 2026" [ref=e285] [cursor=pointer]: "29"
+                        - gridcell [ref=e286]:
+                          - button "Friday, 30 October 2026" [ref=e287] [cursor=pointer]: "30"
+                        - gridcell [ref=e288]:
+                          - button "Saturday, 31 October 2026" [ref=e289] [cursor=pointer]: "31"
+              - paragraph [ref=e290]: Closed on Mondays
+            - generic [ref=e292]:
+              - generic [ref=e293]:
+                - generic [ref=e294]: Guests
+                - combobox "Guests" [ref=e296] [cursor=pointer]:
+                  - option "1 guest"
+                  - option "2 guests" [selected]
+                  - option "3 guests"
+                  - option "4 guests"
+                  - option "5 guests"
+                  - option "6 guests"
+                  - option "7 guests"
+                  - option "8 guests"
+                  - option "9 guests"
+                  - option "10 guests"
+              - generic [ref=e297]:
+                - paragraph [ref=e298]: Choose a time
+                - paragraph [ref=e299]: Tuesday, 6 October
+                - status [ref=e300]:
+                  - generic [ref=e301]: Loading available times…
+          - generic [ref=e309]:
+            - generic [ref=e310]:
+              - paragraph [ref=e311]: Your table
+              - generic [ref=e312]: 6 Oct · 2 guests
+              - generic [ref=e313]: Choose a time that suits you.
+            - button "Continue" [disabled] [ref=e314]:
+              - text: Continue
+              - generic [aria-hidden] [ref=e315]: ↗
+      - paragraph [ref=e316]:
+        - text: Planning something special?
+        - link "+49 7022 904 030 ↗" [ref=e317] [cursor=pointer]:
+          - /url: tel:+497022904030
+    - generic [ref=e319]:
+      - generic [ref=e320]:
+        - heading "Stay a little longer." [level=2] [ref=e321]
+        - link "Back to top" [ref=e322] [cursor=pointer]:
+          - /url: "#main"
+          - text: ↑
+      - generic [ref=e323]:
+        - generic [ref=e324]:
+          - paragraph [ref=e325]: Jilebi.
+          - paragraph [ref=e326]: Indian flavours. Nürtingen heart.
+        - generic [ref=e327]:
+          - heading "Opening Hours" [level=3] [ref=e328]
+          - generic [ref=e329]:
+            - generic [ref=e330]:
+              - term [ref=e331]: Lunch
+              - definition [ref=e332]: 12:00 – 14:00
+            - generic [ref=e333]:
+              - term [ref=e334]: Dinner
+              - definition [ref=e335]: 18:00 – 22:00
+          - paragraph [ref=e336]: Closed Mondays
+        - generic [ref=e337]:
+          - heading "Address" [level=3] [ref=e338]
+          - generic [ref=e339]: Marktstraße 872622 Nürtingen
+          - link "Find your way ↗" [ref=e340] [cursor=pointer]:
+            - /url: https://www.google.com/maps/search/?api=1&query=Marktstra%C3%9Fe+8+72622+N%C3%BCrtingen
+        - generic [ref=e341]:
+          - heading "Email / Phone" [level=3] [ref=e342]
+          - link "info@jilebi.de" [ref=e343] [cursor=pointer]:
+            - /url: mailto:info@jilebi.de
+          - link "+49 7022 904 030" [ref=e344] [cursor=pointer]:
+            - /url: tel:+497022904030
+      - generic [ref=e345]:
+        - paragraph [ref=e346]: © 2026 Jilebi. All rights reserved.
+        - paragraph [ref=e347]: Portfolio demo · contact details are placeholders
+        - generic [ref=e348]:
+          - link "Legal Notice" [ref=e349] [cursor=pointer]:
+            - /url: /en/impressum
+          - link "Privacy Policy" [ref=e350] [cursor=pointer]:
+            - /url: /en/datenschutz
