@@ -63,6 +63,7 @@ export default function Reservation() {
   const [submitting, setSubmitting] = useState(false)
   const [confirmed, setConfirmed] = useState<ConfirmedBooking | null>(null)
   const [error, setError] = useState<string | null>(null)
+  const [availabilityFailed, setAvailabilityFailed] = useState(false)
   const abortRef = useRef<AbortController | null>(null)
   const availabilityCacheRef = useRef(new Map<string, AvailabilityCacheEntry>())
   const successHeadingRef = useRef<HTMLHeadingElement>(null)
@@ -92,6 +93,7 @@ export default function Reservation() {
     const cached = availabilityCacheRef.current.get(dateKey)
     if (cached && Date.now() - cached.fetchedAt < AVAILABILITY_CACHE_TTL_MS) {
       setSlots(cached.slots)
+      setAvailabilityFailed(false)
       setLoadingSlots(false)
       return
     }
@@ -102,6 +104,7 @@ export default function Reservation() {
 
     async function loadAvailability() {
       setLoadingSlots(true)
+      setAvailabilityFailed(false)
       try {
         const res = await fetch(`/api/availability?date=${dateKey}`, {
           signal: controller.signal,
@@ -117,6 +120,7 @@ export default function Reservation() {
       } catch (err) {
         if (err instanceof DOMException && err.name === 'AbortError') return
         setSlots([])
+        setAvailabilityFailed(true)
         setError(t('error'))
       } finally {
         if (!controller.signal.aborted) setLoadingSlots(false)
@@ -142,6 +146,7 @@ export default function Reservation() {
     setSelectedDate(date)
     setSelectedSlotId(null)
     setStep('table')
+    setAvailabilityFailed(false)
     setError(null)
   }
 
@@ -219,6 +224,7 @@ export default function Reservation() {
     setLoadingSlots(true)
     setForm(initialForm)
     setFormErrors({})
+    setAvailabilityFailed(false)
     setError(null)
   }
 
@@ -391,7 +397,7 @@ export default function Reservation() {
                             ))}
                           </div>
                         </div>
-                      ) : slots.length === 0 ? (
+                      ) : availabilityFailed ? null : slots.length === 0 ? (
                         <p className="booking-empty">{t('no_slots')}</p>
                       ) : !hasFittingSlot ? (
                         <p className="booking-empty">{t('no_slots_for_party')}</p>
