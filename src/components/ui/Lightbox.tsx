@@ -109,7 +109,7 @@ export default function Lightbox({
       role="dialog"
       aria-modal="true"
       aria-label={alt}
-      className="fixed inset-0 z-50 bg-charcoal/92 backdrop-blur-sm flex items-center justify-center animate-fade"
+      className="fixed inset-0 z-[60] bg-charcoal/[0.92] backdrop-blur-sm flex items-center justify-center animate-fade"
       onClick={onClose}
     >
       <button
@@ -119,7 +119,7 @@ export default function Lightbox({
           e.stopPropagation()
           onPrev()
         }}
-        className="absolute left-3 sm:left-6 top-1/2 -translate-y-1/2 text-ivory/70 hover:text-ivory focus-visible:text-ivory p-3 transition-colors"
+        className="absolute left-3 sm:left-6 top-1/2 -translate-y-1/2 rounded-full bg-charcoal text-ivory hover:bg-gold-ink focus-visible:outline-ivory p-3 transition-colors"
         aria-label={prevLabel}
       >
         <ChevronLeft />
@@ -148,7 +148,7 @@ export default function Lightbox({
           e.stopPropagation()
           onNext()
         }}
-        className="absolute right-3 sm:right-6 top-1/2 -translate-y-1/2 text-ivory/70 hover:text-ivory focus-visible:text-ivory p-3 transition-colors"
+        className="absolute right-3 sm:right-6 top-1/2 -translate-y-1/2 rounded-full bg-charcoal text-ivory hover:bg-gold-ink focus-visible:outline-ivory p-3 transition-colors"
         aria-label={nextLabel}
       >
         <ChevronRight />
@@ -161,7 +161,7 @@ export default function Lightbox({
           e.stopPropagation()
           onClose()
         }}
-        className="absolute top-4 right-4 sm:top-6 sm:right-6 text-ivory/70 hover:text-ivory focus-visible:text-ivory p-3 transition-colors"
+        className="absolute top-4 right-4 sm:top-6 sm:right-6 rounded-full bg-charcoal text-ivory hover:bg-gold-ink focus-visible:outline-ivory p-3 transition-colors"
         aria-label={closeLabel}
       >
         <CloseIcon />

@@ -21,11 +21,9 @@
     "tagline": "Zusammenkommen und genießen. Entdecken Sie die Wärme indischer Küche, mitten im Herzen von Nürtingen.",
     "cta_menu": "Speisekarte",
     "cta_reserve": "Tisch buchen",
-    "image_alt": "Indisches Thali mit duftendem Reis, Currys, Naan und Mango-Lassi",
+    "image_alt": "Butter Chicken mit Sahne und frischem Koriander, dazu Naan an einem sonnigen Fenster",
+    "image_caption": "Ein bisschen Wärme. Großzügig serviert.",
     "welcome": "Gutes Essen. Gute Gesellschaft.",
-    "courtyard_alt": "Der blumengeschmückte Eingang von Jilebi",
-    "inset_caption": "Eine kleine Auszeit, ganz nah.",
-    "seal": "Mit Liebe gemacht",
     "bottom_note": "Frisch zubereitet. Mit Freude geteilt.",
     "discover": "Hereinspaziert"
   },
@@ -56,10 +54,10 @@
     "photo_note": "Aus der Jilebi-Küche",
     "footnote": "Fragen zu Zutaten oder Allergenen? Sprechen Sie uns gerne an.",
     "image_alt": {
-      "starters": "Ein Koch bereitet frisches Naan im Tandoor-Ofen zu",
+      "starters": "Goldbraune Samosas mit Kartoffel-Erbsen-Füllung und Minz-Chutney",
       "mains": "Butter Chicken mit Sahne und frischem Koriander",
       "desserts": "Gulab Jamun mit Pistazien",
-      "drinks": "Mango-Lassi zu einem indischen Thali"
+      "drinks": "Ein Glas cremiger Mango-Lassi mit Kardamom und frischer Mango"
     }
   },
   "reservation": {
@@ -95,7 +93,9 @@
       "phone_error": "Bitte geben Sie Ihre Telefonnummer ein.",
       "validation_error": "Bitte korrigieren Sie die markierten Felder.",
       "notes": "Anmerkungen (optional)",
-      "notes_label": "Anmerkungen",
+      "notes_label": "Anmerkungen (optional)",
+      "required_hint": "Alle Felder außer Anmerkungen sind Pflichtfelder.",
+      "phone_hint": "Damit wir Sie zu Ihrer Reservierung erreichen können.",
       "submit": "Jetzt reservieren",
       "submitting": "Wird gesendet…"
     },
@@ -137,6 +137,7 @@
     "impressum": "Impressum",
     "datenschutz": "Datenschutz",
     "copyright": "© 2026 Jilebi. Alle Rechte vorbehalten.",
+    "credit": "Design und Entwicklung: Deepak Prabhakar.",
     "demo_notice": "Portfolio-Demo · Kontaktdaten sind Platzhalter",
     "title": "Bleiben Sie noch ein wenig.",
     "subtitle": "Indische Aromen. Nürtinger Herz.",

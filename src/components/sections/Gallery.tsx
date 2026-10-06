@@ -25,7 +25,7 @@ export default function Gallery() {
     <section id="gallery" className="gallery-section section-padding">
       <div className="page-width">
         <div className="section-heading-row">
-          <div><p className="section-eyebrow">03 / {t('label')}</p><h2 className="display-title">{t('title')}<br /><em>{t('title_accent')}</em></h2></div>
+          <div><p className="section-eyebrow">04 / {t('label')}</p><h2 className="display-title">{t('title')}<br /><em>{t('title_accent')}</em></h2></div>
           <p className="body-copy">{t('intro')}</p>
         </div>
 

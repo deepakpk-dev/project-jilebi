@@ -14,7 +14,15 @@ Preserve Georgia for the brand and display headings, paired with the existing In
 
 ## Composition
 
-The hero pairs the oversized wordmark with an arched thali photograph, a small courtyard photograph, and a warm gold seal. The story combines room photography with narrative copy. The menu pairs category photography with priced rows and keyboard-operable tabs. The gallery varies image sizes. The reservation section puts a welcome beside the existing two-step booking form. The footer groups contact information and hours under a final invitation.
+Page order in both languages: Hero → Our Story (01) → Menu (02) → Reservations (03) → Gallery (04) → Footer. Visitors can book directly after browsing the food.
+
+The hero pairs the oversized wordmark with one warm butter-chicken photograph in a thin ivory frame and a quiet caption. The photograph uses a landscape crop on desktop and tablet, and a slightly closer crop on mobile. Below 1024px, the copy and photograph stack. Short desktop viewports use smaller display type and tighter upper spacing to keep the hero actions visible. The story combines room photography with narrative copy. The menu pairs category photography with priced rows and keyboard-operable tabs. The gallery varies image sizes. The reservation section puts a welcome beside the existing two-step booking form. The footer groups contact information and hours under a final invitation.
+
+## Page proportions
+
+Use the hero as the visual anchor. Story, menu, reservations, gallery, and footer use vertical padding of clamp(3rem, 4.5vw, 5.5rem), reduced to 40px below 768px; retain the footer's 28px bottom padding. Section titles range from 36px to 60px, with reservations capped at 56px. Section eyebrows have a 16px bottom gap; heading rows separate from content by 32px on desktop and 24px on mobile. Body text and booking controls retain their sizes. Sections grow naturally with content.
+
+Story photographs range from 360px to 440px high, with 300px on mobile. Menu photographs range from 360px to 440px, with the existing 160px mobile crop; desktop menu rows use 24px vertical padding. The gallery keeps all six photographs and its mosaic: regular image minimums are 170px, the featured image 375px, and the panorama 190px. Mobile minimums are 280px for the featured image and 160px for other images. Footer heading separation is 32px, and the information grid uses 32px upper and 40px lower padding.
 
 ## Interaction and accessibility
 
@@ -30,4 +38,4 @@ The booking form uses a subtly rounded warm-paper surface, restrained shadow, se
 
 ## Assets
 
-Use the existing local restaurant and food photographs through next/image. Do not add invented reviews, awards, or ratings. Preserve the portfolio-demo notice and clearly labeled external directions link.
+Use local restaurant and food photographs through next/image. Menu categories show representative dishes or drinks: samosas for starters, butter chicken for mains, gulab jamun for desserts, and mango lassi for drinks. The starter and drink assets are generated for the portfolio demo; prompts are recorded in docs/menu-image-prompts.md. Do not add invented reviews, awards, or ratings. Preserve the portfolio-demo notice and clearly labeled external directions link.
